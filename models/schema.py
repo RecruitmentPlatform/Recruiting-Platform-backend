@@ -25,7 +25,7 @@ class Recruiter(Base):
     def __repr__(self):
         return str("\n<Recruiter>\nid:{0}\nusername:{1}\nfirstname:{2}\nlastname:{3}\npassword_hash:{4}\nsession_id:{5}"\
                     .format(self.id, self.username, self.firstname, self.lastname, self.password_hash, self.session_id))
-    
+
     @classmethod
     def insert(cls, username, firstname, lastname, password_hash, session_id):
         new_rec = Recruiter()
@@ -36,15 +36,15 @@ class Recruiter(Base):
         new_rec.session_id = session_id
         session.add(new_rec)
         session.commit()
-    
+
     @classmethod
     def get_recruiter(cls, username):
-        return session.query(Recruiter).filter(Recruiter.username==username).one() 
-    
+        return session.query(Recruiter).filter(Recruiter.username==username).one()
+
     @classmethod
     def get_all_recruiter(cls):
-        return session.query(Recruiter).all() 
-    
+        return session.query(Recruiter).all()
+
 
 class Candidate(Base):
     __tablename__ = 'candidate'
@@ -60,12 +60,12 @@ class Candidate(Base):
     # acviity_id = relationship("Application", lazy=True)
     def __repr__(self):
         return str("\n<Candidate>\nid:{0}\nusername:{1}\nfirstname:{2}\nlastname:{3}\nemail:{4}\nphone:{5}\n"
-                    .format(self.id, self.username, self.firstname, self.lastname, self.email, self.phone) + 
+                    .format(self.id, self.username, self.firstname, self.lastname, self.email, self.phone) +
                     "password_hash:{0}\nsession_id:{1}\ndescription:{2}"
                     .format(self.password_hash, self.session_id, self.description))
 
     @classmethod
-    def insert(cls, username, email, password_hash, session_id, 
+    def insert(cls, username, email, password_hash, session_id,
                     firstname = None, lastname = None, phone = None, description = None):
         new_candidate = Candidate()
         new_candidate.username = username
@@ -81,7 +81,7 @@ class Candidate(Base):
 
     @classmethod
     def get_candidate(cls, username):
-        return session.query(Candidate).filter(Candidate.username == username).one() 
+        return session.query(Candidate).filter(Candidate.username == username).one()
 
     @classmethod
     def get_all_candidate(cls):
@@ -104,8 +104,8 @@ class Process(Base):
         new_process = Process()
         new_process.description = description
         session.add(new_process)
-        session.commit()    
-    
+        session.commit()
+
     @classmethod
     def get_all_process(cls):
         return session.query(Process).all()
@@ -128,8 +128,8 @@ class ProcessStep(Base):
         new_process_step.status = status
         new_process_step.priority = priority
         session.add(new_process_step)
-        session.commit()    
-    
+        session.commit()
+
     @classmethod
     def get_all_process_step(cls):
         return session.query(ProcessStep).all()
@@ -145,23 +145,23 @@ class JobOpening(Base):
     num_vacancy = Column(Integer)
     job_category_id = Column(Integer, ForeignKey('job_category.id'))
     job_position_id = Column(Integer, ForeignKey('job_position.id'))
-    # company_id = Column(Integer, ForeignKey('company.id'))
+    company_id = Column(Integer, ForeignKey('company.id'))
     # process_id = Column(Integer, ForeignKey('process.id'))
 
     def __repr__(self):
          return str("\n<JobOpening>\nid:{0}\nname:{1}\ndescription:{2}\ndate_published:{3}\njob_start_date:{4}\nnum_vacancy:{5}\n"
-                    .format(self.id, self.name, self.description, self.date_published, self.job_start_date, self.num_vacancy) + 
-                    "job_category_id:{0}\njob_position_id:{1}\ndescription:{2}\ncompany_id:{3}\nprocess_id:{4}\n" 
+                    .format(self.id, self.name, self.description, self.date_published, self.job_start_date, self.num_vacancy) +
+                    "job_category_id:{0}\njob_position_id:{1}\ndescription:{2}\ncompany_id:{3}\nprocess_id:{4}\n"
                     .format(self.job_category_id, self.job_position_id, self.description, self.company_id, self.process_id))
 
 
         # return str("\n<JobOpening>\nid:{0}\nname:{1}\ndescription:{2}\ndate_published:{3}\njob_start_date:{4}\nnum_vacancy:{5}\n"
-        #             .format(self.id, self.name, self.description, self.date_published, self.job_start_date, self.num_vacancy) + 
-        #             "job_category_id:{0}\njob_position_id:{1}\n" 
+        #             .format(self.id, self.name, self.description, self.date_published, self.job_start_date, self.num_vacancy) +
+        #             "job_category_id:{0}\njob_position_id:{1}\n"
         #             .format(self.job_category_id, self.job_position_id))
 
     # @classmethod
-    # def insert(cls, name, description, date_published, job_start_date, num_vacancy, 
+    # def insert(cls, name, description, date_published, job_start_date, num_vacancy,
     #                 job_category_id, job_position_id, company_id, process_id):
     #     new_job = JobOpening()
     #     new_job.name = name
@@ -178,8 +178,7 @@ class JobOpening(Base):
 
 
     @classmethod
-    def insert(cls, name, description, date_published, job_start_date, num_vacancy, 
-                    job_category_id, job_position_id):
+    def insert(cls, name, description, date_published, job_start_date, num_vacancy, job_category_id, job_position_id):
         new_job = JobOpening()
         new_job.name = name
         new_job.description = description
@@ -190,7 +189,7 @@ class JobOpening(Base):
         new_job.job_position_id = job_position_id
         session.add(new_job)
         session.commit()
-    
+
     @classmethod
     def get_all_job_openings(cls):
         return session.query(JobOpening).all()
@@ -218,7 +217,7 @@ class JobCategory(Base):
         return str("\n<JobCategory>\nid:{0}\ncode:{1}\nname:{2}\ndescription:{3}\n"
                     .format(self.id, self.code, self.name, self.description))
 
-    @classmethod    
+    @classmethod
     def insert(cls, code, name, description):
         new_job_category = JobCategory()
         new_job_category.code = code
@@ -231,7 +230,7 @@ class JobCategory(Base):
     def get_all_job_category(cls):
         return session.query(JobCategory).all()
 
-    
+
 class JobPosition(Base):
     __tablename__ = "job_position"
     id = Column(Integer, primary_key=True)
@@ -249,8 +248,8 @@ class JobPosition(Base):
         new_job_position.name = name
         new_job_position.description = description
         session.add(new_job_position)
-        session.commit()    
-    
+        session.commit()
+
     @classmethod
     def get_all_job_position(cls):
         return session.query(JobPosition).all()
@@ -273,8 +272,8 @@ class Company(Base):
         new_company.name = name
         new_company.description = description
         session.add(new_company)
-        session.commit()    
-    
+        session.commit()
+
     @classmethod
     def get_all_company(cls):
         return session.query(Company).all()
