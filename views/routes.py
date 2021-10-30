@@ -57,6 +57,7 @@ def login():
         return jsonify({"status":"success", "username":username, "session_id":session_id})
     return jsonify({"status":"fail"})
 
+
 #curl -X POST http://127.0.0.1:5000/api/logout -d '{"session_id":"enter session_id here"}'  -H "Content-Type: application/json"
 @app.route("/api/logout", methods=["POST"])
 def logout():
