@@ -55,9 +55,11 @@ class Candidate():
                     WHERE username = ?"""
             cursor.execute(sql, (username,))
         res =  cursor.fetchone()
-        user = Candidate(id = res[0], username = res[1], first_name=res[2],last_name=res[3],\
-                          email=res[4],phone=res[5],description=res[6],pass_hash=res[7],session_id=res[8])
-        return user
+        if res:
+            user = Candidate(id = res[0], username = res[1], first_name=res[2],last_name=res[3],\
+                            email=res[4],phone=res[5],description=res[6],pass_hash=res[7],session_id=res[8])
+            return user
+        return None
         
         
     #    id, self.username, self.first_name, self.last_name, self.email, self.phone, self.description, self.pass_hash, self.session_id
