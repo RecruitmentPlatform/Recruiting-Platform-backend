@@ -15,7 +15,7 @@ class Candidate():
         self.email = email
         self.phone = phone
         self.description = description
-    
+
 
     def insert_candidate(self):
         with sqlite3.connect(self.dbpath) as conn:
@@ -25,9 +25,9 @@ class Candidate():
                       VALUES (?,?,?,?,?,?,?,?);"""
             data = (self.username, self.first_name, self.last_name, self.email, self.phone, self.description, self.pass_hash, self.session_id)
             cursor.execute(sql, data)
-        
 
-    def update_candidate_info(self):
+
+    def update_candidate(self):
         with sqlite3.connect(self.dbpath) as conn:
             cursor = conn.cursor()
             sql = f"""UPDATE {self.tablename}
@@ -63,9 +63,9 @@ class Candidate():
         
         
     #    id, self.username, self.first_name, self.last_name, self.email, self.phone, self.description, self.pass_hash, self.session_id
-            
-                
-       
+
+
+
     #     return user
 
 
@@ -73,10 +73,7 @@ class Candidate():
     def get_all_candidates(cls):
         with sqlite3.connect(cls.dbpath) as conn:
             cursor = conn.cursor()
-            sql = f"""SELECT * 
+            sql = f"""SELECT *
                     FROM {cls.tablename}"""
             cursor.execute(sql)
         return cursor.fetchall()
-    
-
-    

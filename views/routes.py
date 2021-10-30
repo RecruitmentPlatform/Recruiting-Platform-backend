@@ -11,7 +11,7 @@ CORS(app)
 
 
 #curl -X POST http://127.0.0.1:5000/api/signup -d '{"username":"test","email":"test@gmail.com","password":"11111"}'  -H "Content-Type: application/json"
-@app.route("/api/signup", methods=["POST"])  
+@app.route("/api/signup", methods=["POST"])
 def signup():
 
     data = request.get_json()
@@ -26,7 +26,7 @@ def signup():
     user = Candidate.get_candidate(username)
     if user:
         return jsonify({"status":"fail", "message":"Account already exists"})
-    
+
     #create new user and insert if not exists
     new_user = Candidate(username = username, email = email, pass_hash = password_hash, session_id = str(session_id))
     new_user.insert_candidate()
@@ -36,14 +36,14 @@ def signup():
 #curl -X POST http://127.0.0.1:5000/api/login -d '{"username":"test","email":"test@gmail.com","password":"11111"}'  -H "Content-Type: application/json"
 @app.route("/api/login", methods=["POST"])
 def login():
-    
+
     data = request.get_json()
     username = data.get("username")
     password = data.get("password")
 
     print(Candidate.get_all_candidates())
 
-    #query user 
+    #query user
     user = Candidate.get_candidate(username)
     if user is None:
         return jsonify({"status": "fail", "message":"account does not exist"})
@@ -74,4 +74,4 @@ def logout():
 
 
 # @app.route("/api/company", methods=["GET"])
-# def 
+# def
