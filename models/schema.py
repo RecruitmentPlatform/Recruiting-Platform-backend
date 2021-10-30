@@ -7,8 +7,8 @@ from sqlalchemy.schema import MetaData
 
 from types import ClassMethodDescriptorType
 
-# from models.settings import Base, session, relationship
-from settings import Base, session, engine
+from models.settings import Base, session, relationship
+# from settings import Base, session, engine
 from datetime import datetime
 
 
