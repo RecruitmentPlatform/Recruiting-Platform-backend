@@ -3,6 +3,7 @@ from flask_cors import CORS
 
 # from models.settings import session
 from models.utils import hash_password, verify_password, generate_session_id
+from models.schema_test import Candidate
 
 
 
@@ -15,7 +16,6 @@ CORS(app)
 def signup():
 
     data = request.get_json()
-    print(data)
     username = data.get("username")
     email = data.get("email")
     password = data.get("password")
@@ -23,12 +23,13 @@ def signup():
     password_hash = hash_password(password)
     session_id = generate_session_id()
 
-    #query user here
-    #if user already exists
-    #     return jsonify({"status":"fail", "message":"Account already exists"})
 
-    #otherwise insert user info into user table
+    user = Candidate.get_candidate(username)
+    if user:
+        return jsonify({"status":"fail", "message":"Account already exists"})
 
+    new_user = Candidate(username = username, email = email, pass_hash = password_hash, session_id = str(session_id))
+    new_user.insert_candidate()
     return jsonify({"status":"success", "username":username, "session_id":session_id})
 
 
@@ -67,3 +68,7 @@ def logout():
 
     #update session_id to None
     return jsonify({"status":"success"})
+
+
+# @app.route("/api/company", methods=["GET"])
+# def 
