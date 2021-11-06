@@ -1,14 +1,12 @@
 from flask import Flask, request, jsonify
 from flask_cors import CORS
 
-# from models.settings import session
-from models.utils import hash_password, verify_password, generate_session_id
-
 #
 # from models.schemas.candidate import Job Opening
 from models.schemas.candidate import Candidate
 
 from .admin.singup_login_logout import login_user, signup_user, logout_user
+from .recruiter.recruiter_route import all_recruiters, get_a_recruiter
 
 app = Flask(__name__)
 CORS(app)
@@ -23,6 +21,7 @@ def signup():
 @app.route("/api/login", methods=["POST"])
 def login():
     return login_user()
+
 
 #curl -X POST http://127.0.0.1:5000/api/logout -d '{"session_id":"enter session_id here"}'  -H "Content-Type: application/json"
 @app.route("/api/logout", methods=["POST"])
@@ -55,15 +54,16 @@ def logout():
 ## Recruiter Endpoints ##
 
 # Get a list of all recruiters
-# @app.route("/api/recruiters", methods=["GET"])
-# def get_all_recruiters():
+@app.route("/api/recruiters", methods=["GET"])
+def get_all_recruiters():
+    return all_recruiters()
     
 
-
-
-
 # Get a single recruiter that matches the id
-# @app.route("/api/recruiters/<recruiter_id>", methods=["GET"])
+@app.route("/api/recruiters/<recruiter_id>", methods=["GET"])
+def get_recruiter():
+    return get_a_recruiter()
+
 
 # Add a recruiter record
 # @app.route("/api/recruiters/add", methods=["GET"])
