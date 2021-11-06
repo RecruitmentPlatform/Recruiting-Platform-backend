@@ -1,3 +1,4 @@
+# Candidate Schema
 import sqlite3
 
 class Candidate():
@@ -60,15 +61,9 @@ class Candidate():
                             email=res[4],phone=res[5],description=res[6],pass_hash=res[7],session_id=res[8])
             return user
         return None
-        
-        
-    #    id, self.username, self.first_name, self.last_name, self.email, self.phone, self.description, self.pass_hash, self.session_id
 
 
-
-    #     return user
-
-
+    # This function should be disabled in production.
     @classmethod
     def get_all_candidates(cls):
         with sqlite3.connect(cls.dbpath) as conn:

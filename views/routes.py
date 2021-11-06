@@ -3,12 +3,13 @@ from flask_cors import CORS
 
 # from models.settings import session
 from models.utils import hash_password, verify_password, generate_session_id
-from models.schema_test import Candidate
 
+#
+# from models.schemas.candidate import Job Opening
+from models.schemas.candidate import Candidate
 
 app = Flask(__name__)
 CORS(app)
-
 
 #curl -X POST http://127.0.0.1:5000/api/signup -d '{"username":"test","email":"test@gmail.com","password":"11111"}'  -H "Content-Type: application/json"
 @app.route("/api/signup", methods=["POST"])
@@ -22,7 +23,7 @@ def signup():
     # Query database to see if user already exists
     user = Candidate.get_candidate(username)
     if user:
-    return jsonify({"status":"fail", "message":"Account already exists"})
+        return jsonify({"status":"fail", "message":"Account already exists"})
 
     # User does not exist
     # Hash the password and generate the session_id
@@ -76,6 +77,7 @@ def logout():
     return jsonify({"status":"success"})
 
 ## Company Endpoints ##
+
 # Get a list of all companies
 # @app.route("/api/companies", methods=["GET"])
 
@@ -93,6 +95,7 @@ def logout():
 
 
 ## Recruiter Endpoints ##
+
 # Get a list of all recruiters
 # @app.route("/api/recruiters", methods=["GET"])
 
@@ -110,6 +113,7 @@ def logout():
 
 
 ## Candidate Endpoints ##
+
 # Get a list of all candidates
 # @app.route("/api/candidates", methods=["GET"])
 
@@ -117,16 +121,17 @@ def logout():
 # @app.route("/api/candidates/<candidate_id>", methods=["GET"])
 
 # Add a candidate record
-# @app.route("/api/candidates/add", methods=["GET"])
+# @app.route("/api/candidates/add", methods=["POST"])
 
 # Update a candidate record
-# @app.route("/api/candidates/update", methods=["GET"])
+# @app.route("/api/candidates/update", methods=["PUT"])
 
 # Delete a candidate record that matches the id
-# @app.route("/api/candidates/delete/<candidate_id>", methods=["GET"])
+# @app.route("/api/candidates/delete/<candidate_id>", methods=["DELETE"])
 
 
 ## Job Opening Endpoints ##
+
 # Get a list of all job openings
 # @app.route("/api/job-openings/", methods=["GET"])
 
@@ -144,8 +149,6 @@ def logout():
 
 
 ## Application Endpoints ##
-# Get all applications for a job given the job opening ID
-# @app.route("/api/applications/<job_opening_id>", methods=["GET"])
 
 # Get a single application that matches the id
 # @app.route("/api/applications/<application_id>", methods=["GET"])
@@ -159,6 +162,11 @@ def logout():
 # Delete an application record that matches the id
 # @app.route("/api/applications/delete/<application_id>", methods=["GET"])
 
+# Get all applications for a job given the job opening ID
+# @app.route("/api/applications/<job_opening_id>", methods=["GET"])
+
+# Get all applications for a candidate given the candidate ID
+# @app.route("/api/applications/<job_opening_id>", methods=["GET"])
 
 ## Process Endpoints ##
 # Get the process for a job given the job ID

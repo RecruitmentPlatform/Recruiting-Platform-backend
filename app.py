@@ -1,7 +1,7 @@
 import os
 from views.routes import app
 
-from models.schema_test import Candidate
+from models.schemas.candidate import Candidate
 
 PATH = os.path.dirname(__file__)
 Candidate.dbpath = os.path.join(PATH, "data", "test.db")
