@@ -15,7 +15,7 @@ def schema(dbpath = DATAPATH):
                 phone	TEXT,
                 description	TEXT,
                 pass_hash	TEXT NOT NULL,
-                session_id	TEXT NOT NULL
+                session_id	TEXT
             );"""
         cursor.execute(sql)
 

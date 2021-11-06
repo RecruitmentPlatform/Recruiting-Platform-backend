@@ -20,7 +20,7 @@ def signup():
     password = data.get("password")
 
     # Query database to see if user already exists
-    user = Candidate.get_candidate(email)
+    user = Candidate.get_candidate_by_email(email)
     if user:
         return jsonify({"status":"fail", "message":"This account already exists."})
 
@@ -31,10 +31,6 @@ def signup():
 
     # Create new user and insert
     new_user = Candidate(email = email, pass_hash = password_hash, session_id = str(session_id))
-    print(new_user.email)
-    print(new_user.pass_hash)
-    print(new_user.session_id)
-
     new_user.insert_candidate()
     return jsonify({"status":"success",  "session_id":session_id})
 
@@ -48,7 +44,7 @@ def login():
     password = data.get("password")
 
     #query user
-    user = Candidate.get_candidate(email)
+    user = Candidate.get_candidate_by_email(email)
     if user is None:
         return jsonify({"status": "fail", "message":"Account does not exist"})
 
@@ -71,10 +67,14 @@ def logout():
     session_id = data.get("session_id")
 
     #query user with session_id
-    # if user is None:
-    #     return jsonify({"status":"logout failed"})
+    user = Candidate.get_candidate_by_session_id(session_id)
 
-    #update session_id to None
+    if user is None:
+        return jsonify({"status":"logout failed"})
+
+    user.session_id = None
+    user.update_candidate()
+    print(user.session_id)
     return jsonify({"status":"success"})
 
 ## Company Endpoints ##

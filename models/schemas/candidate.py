@@ -44,15 +44,30 @@ class Candidate():
             cursor.execute(sql, data)
 
 
-
     @classmethod
-    def get_candidate(cls, email):
+    def get_candidate_by_email(cls, email):
         with sqlite3.connect(cls.dbpath) as conn:
             cursor = conn.cursor()
             sql = f"""SELECT *
                     FROM {cls.tablename}
                     WHERE email = ?"""
             cursor.execute(sql, (email,))
+        res =  cursor.fetchone()
+        if res:
+            user = Candidate(id = res[0], first_name=res[1], last_name=res[2],email=res[3],\
+                             phone=res[4],description=res[5],pass_hash=res[6],session_id=res[7])
+            return user
+        return None
+
+
+    @classmethod
+    def get_candidate_by_session_id(cls, session_id):
+        with sqlite3.connect(cls.dbpath) as conn:
+            cursor = conn.cursor()
+            sql = f"""SELECT *
+                    FROM {cls.tablename}
+                    WHERE session_id = ?"""
+            cursor.execute(sql, (session_id,))
         res =  cursor.fetchone()
         print(res)
         if res:
@@ -62,7 +77,15 @@ class Candidate():
         return None
 
 
+
+
+
+    
+
+    #################################################
+    # For debug -->
     # This function should be disabled in production.
+    ##################################################
     @classmethod
     def get_all_candidates(cls):
         with sqlite3.connect(cls.dbpath) as conn:
