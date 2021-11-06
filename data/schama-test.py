@@ -9,7 +9,7 @@ def schema(dbpath = DATAPATH):
         cursor = conn.cursor()
         sql = """CREATE TABLE IF NOT EXISTS candidate (
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
-                username TEXT NOT NULL,
+                username  NULL,
                 first_name TEXT,
                 last_name	TEXT,
                 email	TEXT NOT NULL,

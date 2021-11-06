@@ -25,7 +25,7 @@ def signup():
     #query user
     user = Candidate.get_candidate(username)
     if user:
-        return jsonify({"status":"fail", "message":"Account already exists"})
+        return jsonify({"status":"fail", "message":"This account already exists."})
 
     #create new user and insert if not exists
     new_user = Candidate(username = username, email = email, pass_hash = password_hash, session_id = str(session_id))
@@ -53,9 +53,9 @@ def login():
     if auth == True and username == user.username:
         session_id = str(generate_session_id())
         user.session_id = session_id
-        user.update_candidate_info()
+        user.update_candidate()
         return jsonify({"status":"success", "username":username, "session_id":session_id})
-    return jsonify({"status":"fail"})
+    return jsonify({"status":"fail", "message":"Login failed."})
 
 
 #curl -X POST http://127.0.0.1:5000/api/logout -d '{"session_id":"enter session_id here"}'  -H "Content-Type: application/json"
