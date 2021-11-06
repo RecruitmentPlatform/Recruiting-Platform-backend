@@ -18,6 +18,17 @@ def schema(dbpath = DATAPATH):
                 session_id	TEXT
             );"""
         cursor.execute(sql)
+        sql = """CREATE TABLE IF NOT EXISTS recruiter (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                first_name TEXT,
+                last_name	TEXT,
+                email	TEXT NOT NULL,
+                pass_hash	TEXT NOT NULL,
+                session_id	TEXT
+            );"""
+        cursor.execute(sql)
+
+    
 
 if __name__ == "__main__":
     schema() 

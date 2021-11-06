@@ -69,7 +69,6 @@ class Candidate():
                     WHERE session_id = ?"""
             cursor.execute(sql, (session_id,))
         res =  cursor.fetchone()
-        print(res)
         if res:
             user = Candidate(id = res[0], first_name=res[1], last_name=res[2],email=res[3],\
                              phone=res[4],description=res[5],pass_hash=res[6],session_id=res[7])

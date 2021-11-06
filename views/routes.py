@@ -8,74 +8,31 @@ from models.utils import hash_password, verify_password, generate_session_id
 # from models.schemas.candidate import Job Opening
 from models.schemas.candidate import Candidate
 
+from .admin.singup_login_logout import login_user, signup_user, logout_user
+
 app = Flask(__name__)
 CORS(app)
 
 #curl -X POST http://127.0.0.1:5000/api/signup -d '{"email":"test@gmail.com","password":"11111"}'  -H "Content-Type: application/json"
 @app.route("/api/signup", methods=["POST"])
 def signup():
-
-    data = request.get_json()
-    email = data.get("email")
-    password = data.get("password")
-
-    # Query database to see if user already exists
-    user = Candidate.get_candidate_by_email(email)
-    if user:
-        return jsonify({"status":"fail", "message":"This account already exists."})
-
-    # User does not exist
-    # Hash the password and generate the session_id
-    password_hash = hash_password(password)
-    session_id = generate_session_id()
-
-    # Create new user and insert
-    new_user = Candidate(email = email, pass_hash = password_hash, session_id = str(session_id))
-    new_user.insert_candidate()
-    return jsonify({"status":"success",  "session_id":session_id})
+    return signup_user()
 
 
 #curl -X POST http://127.0.0.1:5000/api/login -d '{"email":"test@gmail.com","password":"11111"}'  -H "Content-Type: application/json"
 @app.route("/api/login", methods=["POST"])
 def login():
-
-    data = request.get_json()
-    email = data.get("email")
-    password = data.get("password")
-
-    #query user
-    user = Candidate.get_candidate_by_email(email)
-    if user is None:
-        return jsonify({"status": "fail", "message":"Account does not exist"})
-
-    password_hash = hash_password(password)
-    auth = verify_password(password, password_hash)
-
-    if auth == True and email == user.email:
-        session_id = str(generate_session_id())
-        user.session_id = session_id
-        user.update_candidate()
-        return jsonify({"status":"success", "session_id":session_id})
-    return jsonify({"status":"fail", "message":"Login failed."})
-
+    return login_user()
 
 #curl -X POST http://127.0.0.1:5000/api/logout -d '{"session_id":"enter session_id here"}'  -H "Content-Type: application/json"
 @app.route("/api/logout", methods=["POST"])
 def logout():
+    return logout_user()
 
-    data = request.get_json()
-    session_id = data.get("session_id")
 
-    #query user with session_id
-    user = Candidate.get_candidate_by_session_id(session_id)
 
-    if user is None:
-        return jsonify({"status":"logout failed"})
 
-    user.session_id = None
-    user.update_candidate()
-    print(user.session_id)
-    return jsonify({"status":"success"})
+
 
 ## Company Endpoints ##
 
@@ -99,6 +56,11 @@ def logout():
 
 # Get a list of all recruiters
 # @app.route("/api/recruiters", methods=["GET"])
+# def get_all_recruiters():
+    
+
+
+
 
 # Get a single recruiter that matches the id
 # @app.route("/api/recruiters/<recruiter_id>", methods=["GET"])
