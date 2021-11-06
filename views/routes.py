@@ -11,17 +11,16 @@ from models.schemas.candidate import Candidate
 app = Flask(__name__)
 CORS(app)
 
-#curl -X POST http://127.0.0.1:5000/api/signup -d '{"username":"test","email":"test@gmail.com","password":"11111"}'  -H "Content-Type: application/json"
+#curl -X POST http://127.0.0.1:5000/api/signup -d '{"email":"test@gmail.com","password":"11111"}'  -H "Content-Type: application/json"
 @app.route("/api/signup", methods=["POST"])
 def signup():
 
     data = request.get_json()
-    username = data.get("username")
     email = data.get("email")
     password = data.get("password")
 
     # Query database to see if user already exists
-    user = Candidate.get_candidate(username)
+    user = Candidate.get_candidate(email)
     if user:
         return jsonify({"status":"fail", "message":"This account already exists."})
 
@@ -31,34 +30,36 @@ def signup():
     session_id = generate_session_id()
 
     # Create new user and insert
-    new_user = Candidate(username = username, email = email, pass_hash = password_hash, session_id = str(session_id))
+    new_user = Candidate(email = email, pass_hash = password_hash, session_id = str(session_id))
+    print(new_user.email)
+    print(new_user.pass_hash)
+    print(new_user.session_id)
+
     new_user.insert_candidate()
-    return jsonify({"status":"success", "username":username, "session_id":session_id})
+    return jsonify({"status":"success",  "session_id":session_id})
 
 
-#curl -X POST http://127.0.0.1:5000/api/login -d '{"username":"test","email":"test@gmail.com","password":"11111"}'  -H "Content-Type: application/json"
+#curl -X POST http://127.0.0.1:5000/api/login -d '{"email":"test@gmail.com","password":"11111"}'  -H "Content-Type: application/json"
 @app.route("/api/login", methods=["POST"])
 def login():
 
     data = request.get_json()
-    username = data.get("username")
+    email = data.get("email")
     password = data.get("password")
 
-    print(Candidate.get_all_candidates())
-
     #query user
-    user = Candidate.get_candidate(username)
+    user = Candidate.get_candidate(email)
     if user is None:
         return jsonify({"status": "fail", "message":"Account does not exist"})
 
     password_hash = hash_password(password)
     auth = verify_password(password, password_hash)
 
-    if auth == True and username == user.username:
+    if auth == True and email == user.email:
         session_id = str(generate_session_id())
         user.session_id = session_id
         user.update_candidate()
-        return jsonify({"status":"success", "username":username, "session_id":session_id})
+        return jsonify({"status":"success", "session_id":session_id})
     return jsonify({"status":"fail", "message":"Login failed."})
 
 

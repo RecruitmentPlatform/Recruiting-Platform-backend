@@ -6,9 +6,8 @@ class Candidate():
     tablename = "candidate"
     dbpath = "../data/test.db"
 
-    def __init__(self, username, email, pass_hash, session_id, id = None, first_name = None, last_name = None, phone = None, description = None):
+    def __init__(self, email, pass_hash, session_id, id = None, first_name = None, last_name = None, phone = None, description = None):
         self.id = id
-        self.username = username
         self.pass_hash = pass_hash
         self.session_id = session_id
         self.first_name = first_name
@@ -22,9 +21,9 @@ class Candidate():
         with sqlite3.connect(self.dbpath) as conn:
             cursor = conn.cursor()
             sql = f"""INSERT INTO {self.tablename}
-                      (username, first_name, last_name, email, phone, description, pass_hash, session_id)
-                      VALUES (?,?,?,?,?,?,?,?);"""
-            data = (self.username, self.first_name, self.last_name, self.email, self.phone, self.description, self.pass_hash, self.session_id)
+                      (first_name, last_name, email, phone, description, pass_hash, session_id)
+                      VALUES (?,?,?,?,?,?,?);"""
+            data = (self.first_name, self.last_name, self.email, self.phone, self.description, self.pass_hash, self.session_id)
             cursor.execute(sql, data)
 
 
@@ -32,8 +31,7 @@ class Candidate():
         with sqlite3.connect(self.dbpath) as conn:
             cursor = conn.cursor()
             sql = f"""UPDATE {self.tablename}
-                      SET username = ?,
-                          first_name = ?,
+                      SET first_name = ?,
                           last_name = ?,
                           email = ?,
                           phone = ?,
@@ -42,23 +40,24 @@ class Candidate():
                           session_id = ?
                       WHERE id = ?
                     """
-            data = (self.username, self.first_name, self.last_name, self.email, self.phone, self.description, self.pass_hash, self.session_id, self.id)
+            data = (self.first_name, self.last_name, self.email, self.phone, self.description, self.pass_hash, self.session_id, self.id)
             cursor.execute(sql, data)
 
 
 
     @classmethod
-    def get_candidate(cls, username):
+    def get_candidate(cls, email):
         with sqlite3.connect(cls.dbpath) as conn:
             cursor = conn.cursor()
             sql = f"""SELECT *
                     FROM {cls.tablename}
-                    WHERE username = ?"""
-            cursor.execute(sql, (username,))
+                    WHERE email = ?"""
+            cursor.execute(sql, (email,))
         res =  cursor.fetchone()
+        print(res)
         if res:
-            user = Candidate(id = res[0], username = res[1], first_name=res[2],last_name=res[3],\
-                            email=res[4],phone=res[5],description=res[6],pass_hash=res[7],session_id=res[8])
+            user = Candidate(id = res[0], first_name=res[1], last_name=res[2],email=res[3],\
+                             phone=res[4],description=res[5],pass_hash=res[6],session_id=res[7])
             return user
         return None
 
