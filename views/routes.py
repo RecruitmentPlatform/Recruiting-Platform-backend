@@ -6,7 +6,8 @@ from flask_cors import CORS
 from models.schemas.candidate import Candidate
 
 from .admin.singup_login_logout import login_user, signup_user, logout_user
-from .recruiter.recruiter_route import all_recruiters, get_a_recruiter
+# from .recruiter.recruiter_route import all_recruiters, get_a_recruiter
+from .candidate.candiate_routes import list_candidates, get_candidate_by_id, mutate_candidate_record
 
 app = Flask(__name__)
 CORS(app)
@@ -27,10 +28,6 @@ def login():
 @app.route("/api/logout", methods=["POST"])
 def logout():
     return logout_user()
-
-
-
-
 
 
 ## Company Endpoints ##
@@ -54,15 +51,15 @@ def logout():
 ## Recruiter Endpoints ##
 
 # Get a list of all recruiters
-@app.route("/api/recruiters", methods=["GET"])
-def get_all_recruiters():
-    return all_recruiters()
+# @app.route("/api/recruiters", methods=["GET"])
+# def get_all_recruiters():
+#     return all_recruiters()
     
 
 # Get a single recruiter that matches the id
-@app.route("/api/recruiters/<recruiter_id>", methods=["GET"])
-def get_recruiter():
-    return get_a_recruiter()
+# @app.route("/api/recruiters/<recruiter_id>", methods=["GET"])
+# def get_recruiter():
+#     return get_a_recruiter()
 
 
 # Add a recruiter record
@@ -78,16 +75,32 @@ def get_recruiter():
 ## Candidate Endpoints ##
 
 # Get a list of all candidates
-# @app.route("/api/candidates", methods=["GET"])
+# curl -X GET http://127.0.0.1:5000/api/candidates
+@app.route("/api/candidates", methods=["GET"])
+def query_all_candidates():
+    return list_candidates()
+
 
 # Get a single candidate that matches the id
-# @app.route("/api/candidates/<candidate_id>", methods=["GET"])
+#curl -X GET http://127.0.0.1:5000/api/candidates/1
+@app.route("/api/candidates/<candidate_id>", methods=["GET"])
+def query_candidate_by_id(candidate_id):
+    return get_candidate_by_id(candidate_id)
+        
 
 # Add a candidate record
 # @app.route("/api/candidates/add", methods=["POST"])
 
+
 # Update a candidate record
-# @app.route("/api/candidates/update", methods=["PUT"])
+# curl -X PUT http://127.0.0.1:5000/api/candidates/update -d '{"first_name":"test", "last_name":"user", "email":"", "phone":"1234567", "description":"swe", "session_id"}' -H "Content-Type: application/json" 
+@app.route("/api/candidates/update", methods=["PUT"])
+def update_candidate():
+    return mutate_candidate_record()
+    
+
+
+
 
 # Delete a candidate record that matches the id
 # @app.route("/api/candidates/delete/<candidate_id>", methods=["DELETE"])

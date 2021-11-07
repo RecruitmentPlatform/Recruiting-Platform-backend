@@ -43,15 +43,25 @@ class Candidate():
             data = (self.first_name, self.last_name, self.email, self.phone, self.description, self.pass_hash, self.session_id, self.id)
             cursor.execute(sql, data)
 
+    @classmethod
+    def get_candidate(cls, criteria, data):
+        print(criteria, data)
+        if criteria == "email":
+            return Candidate.query_candidate("email", data)
+        elif criteria == "session_id":
+            return Candidate.query_candidate("session_id", data)
+        elif criteria == "candidate_id":
+            return Candidate.query_candidate("id", data)
+
 
     @classmethod
-    def get_candidate_by_email(cls, email):
+    def query_candidate(cls, criteria, data):
         with sqlite3.connect(cls.dbpath) as conn:
             cursor = conn.cursor()
             sql = f"""SELECT *
                     FROM {cls.tablename}
-                    WHERE email = ?"""
-            cursor.execute(sql, (email,))
+                    WHERE {criteria} = ?"""
+            cursor.execute(sql, (data,))
         res =  cursor.fetchone()
         if res:
             user = Candidate(id = res[0], first_name=res[1], last_name=res[2],email=res[3],\
@@ -60,26 +70,21 @@ class Candidate():
         return None
 
 
-    @classmethod
-    def get_candidate_by_session_id(cls, session_id):
-        with sqlite3.connect(cls.dbpath) as conn:
-            cursor = conn.cursor()
-            sql = f"""SELECT *
-                    FROM {cls.tablename}
-                    WHERE session_id = ?"""
-            cursor.execute(sql, (session_id,))
-        res =  cursor.fetchone()
-        if res:
-            user = Candidate(id = res[0], first_name=res[1], last_name=res[2],email=res[3],\
-                             phone=res[4],description=res[5],pass_hash=res[6],session_id=res[7])
-            return user
-        return None
+    # @classmethod
+    # def get_candidate_by_session_id(cls, session_id):
+    #     with sqlite3.connect(cls.dbpath) as conn:
+    #         cursor = conn.cursor()
+    #         sql = f"""SELECT *
+    #                 FROM {cls.tablename}
+    #                 WHERE session_id = ?"""
+    #         cursor.execute(sql, (session_id,))
+    #     res =  cursor.fetchone()
+    #     if res:
+    #         user = Candidate(id = res[0], first_name=res[1], last_name=res[2],email=res[3],\
+    #                          phone=res[4],description=res[5],pass_hash=res[6],session_id=res[7])
+    #         return user
+    #     return None
 
-
-
-
-
-    
 
     #################################################
     # For debug -->
@@ -92,4 +97,20 @@ class Candidate():
             sql = f"""SELECT *
                     FROM {cls.tablename}"""
             cursor.execute(sql)
-        return cursor.fetchall()
+        candidates =  cursor.fetchall()
+        res = []
+        candidates_dict = {}
+        for candidate in candidates:
+            if candidate[1] is None or candidate[2] is None:
+                continue
+            else:
+                candidates_dict["id"] = candidate[0]
+                candidates_dict["first_name"] = candidate[1]
+                candidates_dict["last_name"] = candidate[2]
+                candidates_dict["email"] = candidate[3]
+                candidates_dict["phone"] = candidate[4]
+                candidates_dict["description"] = candidate[5]
+            res.append(candidates_dict)
+        return res
+
+
