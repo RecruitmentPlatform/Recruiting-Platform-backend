@@ -28,7 +28,6 @@ class Candidate():
             data = (self.first_name, self.last_name, self.email, self.phone, self.description, self.pass_hash, self.session_id, self.ethnicity_id, self.gender_id, self.gender_pronoun_id)
             cursor.execute(sql, data)
 
-
     def update(self):
         with sqlite3.connect(self.dbpath) as conn:
             cursor = conn.cursor()
@@ -48,27 +47,23 @@ class Candidate():
             data = (self.first_name, self.last_name, self.email, self.phone, self.description, self.pass_hash, self.session_id, self.ethnicity_id, self.gender_id, self.gender_pronoun_id, self.id)
             cursor.execute(sql, data)
 
-
     def delete(self, id):
         with sqlite3.connect(self.dbpath) as conn:
             cursor = conn.cursor()
             sql = f"""DELETE
                       FROM {self.tablename}
-                      WHERE id = ?
-                    """
+                      WHERE id = ?"""
             cursor.execute(sql, id)
-
 
     @classmethod
     def get(cls, criteria, data):
-        print(criteria, data)
+        #print(criteria, data)
         if criteria == "email":
             return Candidate.query("email", data)
         elif criteria == "session_id":
             return Candidate.query("session_id", data)
         elif criteria == "candidate_id":
             return Candidate.query("id", data)
-
 
     @classmethod
     def query(cls, criteria, data):
@@ -80,12 +75,9 @@ class Candidate():
             cursor.execute(sql, (data,))
         res =  cursor.fetchone()
         if res:
-            user = Candidate(id = res[0], first_name=res[1], last_name=res[2],email=res[3],\
-                             phone=res[4],description=res[5],pass_hash=res[6],session_id=res[7])
+            user = Candidate(id = res[0],first_name=res[1], last_name=res[2],email=res[3],phone=res[4],description=res[5],pass_hash=res[6],session_id=res[7])
             return user
         return None
-
-
 
     #################################################
     # For debug -->

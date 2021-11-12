@@ -10,7 +10,7 @@ def list_candidates():
 
 def get_candidate_by_id(candidate_id):
     candidate = Candidate.get("candidate_id", candidate_id)
-    if candidate and candidate.first_name and candidate.last_name:
+    if candidate:
         return jsonify({"message":"success", "candidate":{"id":candidate.id, "first_name":candidate.first_name,"last_name":candidate.last_name, "email":candidate.email,"phone":candidate.phone, "description":candidate.description}})
     return jsonify({"message":"Candidate does not exists."})
 
