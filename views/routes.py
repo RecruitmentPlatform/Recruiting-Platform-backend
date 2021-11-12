@@ -54,7 +54,7 @@ def logout():
 # @app.route("/api/recruiters", methods=["GET"])
 # def get_all_recruiters():
 #     return all_recruiters()
-    
+
 
 # Get a single recruiter that matches the id
 # @app.route("/api/recruiters/<recruiter_id>", methods=["GET"])
@@ -86,18 +86,18 @@ def query_all_candidates():
 @app.route("/api/candidates/<candidate_id>", methods=["GET"])
 def query_candidate_by_id(candidate_id):
     return get_candidate_by_id(candidate_id)
-        
+
 
 # Add a candidate record
 # @app.route("/api/candidates/add", methods=["POST"])
 
 
 # Update a candidate record
-# curl -X PUT http://127.0.0.1:5000/api/candidates/update -d '{"first_name":"test", "last_name":"user", "email":"", "phone":"1234567", "description":"swe", "session_id"}' -H "Content-Type: application/json" 
+# curl -X PUT http://127.0.0.1:5000/api/candidates/update -d '{"first_name":"test", "last_name":"user", "email":"", "phone":"1234567", "description":"swe", "session_id"}' -H "Content-Type: application/json"
 @app.route("/api/candidates/update", methods=["PUT"])
 def update_candidate():
     return mutate_candidate_record()
-    
+
 
 
 
