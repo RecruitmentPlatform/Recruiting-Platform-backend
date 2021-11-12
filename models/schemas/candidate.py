@@ -60,16 +60,28 @@ class Candidate():
 
 
     @classmethod
-    def get(cls, id):
+    def get(cls, criteria, data):
+        print(criteria, data)
+        if criteria == "email":
+            return Candidate.query("email", data)
+        elif criteria == "session_id":
+            return Candidate.query("session_id", data)
+        elif criteria == "candidate_id":
+            return Candidate.query("id", data)
+
+
+    @classmethod
+    def query(cls, criteria, data):
         with sqlite3.connect(cls.dbpath) as conn:
             cursor = conn.cursor()
             sql = f"""SELECT *
                     FROM {cls.tablename}
-                    WHERE id = ?"""
-            cursor.execute(sql, (id))
+                    WHERE {criteria} = ?"""
+            cursor.execute(sql, (data,))
         res =  cursor.fetchone()
         if res:
-            user = Candidate(id = res[0])
+            user = Candidate(id = res[0], first_name=res[1], last_name=res[2],email=res[3],\
+                             phone=res[4],description=res[5],pass_hash=res[6],session_id=res[7])
             return user
         return None
 

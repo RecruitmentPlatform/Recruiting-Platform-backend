@@ -7,7 +7,7 @@ from models.schemas.candidate import Candidate
 
 from .admin.singup_login_logout import login_user, signup_user, logout_user
 # from .recruiter.recruiter_route import all_recruiters, get_a_recruiter
-from .candidate.candiate_routes import list_candidates, get_candidate_by_id, mutate_candidate_record, delete_candiate_record
+from .candidate.candidate_routes import list_candidates, get_candidate_by_id, mutate_candidate_record, delete_candidate_record
 
 app = Flask(__name__)
 CORS(app)
@@ -76,7 +76,7 @@ def logout():
 
 # Get a list of all candidates
 # curl -X GET http://127.0.0.1:5000/api/candidates
-@app.route("/api/candidates", methods=["GET"])
+@app.route("/api/candidates/all", methods=["GET"])
 def query_all_candidates():
     return list_candidates()
 
@@ -97,13 +97,13 @@ def query_candidate_by_id(candidate_id):
 @app.route("/api/candidates/update", methods=["PUT"])
 def update_candidate():
     return mutate_candidate_record()
-    
+
 # Delete a candidate record that matches the id
 #curl -X "DELETE" http://127.0.0.1:5000/api/candidates/delete/1
 @app.route("/api/candidates/delete/<candidate_id>", methods=["DELETE"])
 def delete_candidate_by_id(candidate_id):
-    return delete_candiate_record(candidate_id)
-    
+    return delete_candidate_record(candidate_id)
+
 
 
 

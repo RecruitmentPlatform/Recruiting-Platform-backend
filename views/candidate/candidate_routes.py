@@ -3,17 +3,16 @@ from models.utils import hash_password, verify_password, generate_session_id
 from models.schemas.candidate import Candidate
 
 def list_candidates():
-    candidates = Candidate.get()
+    candidates = Candidate.get_all()
     if candidates:
         return jsonify({"message":"success", "candidates":candidates})
-    return jsonify({"message":"Candidate does not exists."})
+    return jsonify({"message":"No candidates in database."})
 
 def get_candidate_by_id(candidate_id):
     candidate = Candidate.get("candidate_id", candidate_id)
     if candidate and candidate.first_name and candidate.last_name:
         return jsonify({"message":"success", "candidate":{"id":candidate.id, "first_name":candidate.first_name,"last_name":candidate.last_name, "email":candidate.email,"phone":candidate.phone, "description":candidate.description}})
     return jsonify({"message":"Candidate does not exists."})
-
 
 def mutate_candidate_record():
     data = request.get_json()
@@ -40,9 +39,9 @@ def mutate_candidate_record():
     candidate.update_candidate()
     return jsonify({"status":"success"})
 
-def delete_candiate_record(id):
-    candidate = Candidate.get("candidate_id", id)
-    if candidate is None:
-        return jsonify({"status":"fail", "message":"This candidate does not exits."})
-    candidate.delete(id)
-    return jsonify({"status":"success"})
+def delete_candidate_record(candidate_id):
+    candidate = Candidate.get("candidate_id", candidate_id)
+    if candidate:
+        Candidate.delete(candidate_id)
+        jsonify({"message":"success"})
+    return jsonify({"message":"fail"})
