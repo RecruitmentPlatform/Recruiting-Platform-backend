@@ -6,7 +6,7 @@ class Candidate():
     tablename = "candidate"
     dbpath = "../data/database.db"
 
-    def __init__(self, id = None, first_name = None, last_name = None, email,  phone = None, description = None, pass_hash, session_id, ethnicity_id = None, gender_id = None, gender_pronoun_id = None):
+    def __init__(self, email, pass_hash, session_id, id = None, first_name = None, last_name = None, phone = None, description = None, ethnicity_id = None, gender_id = None, gender_pronoun_id = None):
         self.id = id
         self.pass_hash = pass_hash
         self.session_id = session_id
@@ -47,12 +47,12 @@ class Candidate():
                     """
             data = (self.first_name, self.last_name, self.email, self.phone, self.description, self.pass_hash, self.session_id, self.ethnicity_id, self.gender_id, self.gender_pronoun_id, self.id)
             cursor.execute(sql, data)
-    
 
-    def delete_candidate(self, id):
+
+    def delete(self, id):
         with sqlite3.connect(self.dbpath) as conn:
             cursor = conn.cursor()
-            sql = f"""DELETE 
+            sql = f"""DELETE
                       FROM {self.tablename}
                       WHERE id = ?
                     """
