@@ -23,12 +23,6 @@ CREATE TABLE IF NOT EXISTS "job_position" (
 	"description"	TEXT,
 	PRIMARY KEY("id" AUTOINCREMENT)
 );
-CREATE TABLE IF NOT EXISTS "process" (
-	"id"	INTEGER NOT NULL UNIQUE,
-	"title"	TEXT NOT NULL,
-	"description"	TEXT,
-	PRIMARY KEY("id" AUTOINCREMENT)
-);
 CREATE TABLE IF NOT EXISTS "recruiter" (
 	"id"	INTEGER NOT NULL UNIQUE,
 	"company_id"	INTEGER,
@@ -126,15 +120,6 @@ CREATE TABLE IF NOT EXISTS "job_opening" (
 	FOREIGN KEY("job_category_id") REFERENCES "job_category"("id"),
 	FOREIGN KEY("job_position_id") REFERENCES "job_position"("id"),
 	FOREIGN KEY("company_id") REFERENCES "company"("id"),
-	FOREIGN KEY("process_id") REFERENCES "process"("id")
-);
-CREATE TABLE IF NOT EXISTS "process_step" (
-	"id"	INTEGER NOT NULL UNIQUE,
-	"process_id"	INTEGER NOT NULL,
-	"title"	TEXT NOT NULL,
-	"description"	TEXT,
-	"required"	INTEGER NOT NULL,
-	PRIMARY KEY("id" AUTOINCREMENT),
 	FOREIGN KEY("process_id") REFERENCES "process"("id")
 );
 CREATE TABLE IF NOT EXISTS "college" (

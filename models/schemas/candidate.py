@@ -89,4 +89,22 @@ class Candidate():
             sql = f"""SELECT *
                     FROM {cls.tablename}"""
             cursor.execute(sql)
-        return cursor.fetchall()
+        candidates =  cursor.fetchall()
+        res = []
+        candidates_dict = {}
+        for candidate in candidates:
+            print("candidate",candidate)
+            if candidate[0] is None:
+                continue
+            else:
+                candidates_dict["id"] = candidate[0]
+                candidates_dict["first_name"] = candidate[1]
+                candidates_dict["last_name"] = candidate[2]
+                candidates_dict["email"] = candidate[3]
+                candidates_dict["phone"] = candidate[4]
+                candidates_dict["description"] = candidate[5]
+                candidates_dict["ethnicity_id"] = candidate[8]
+                candidates_dict["gender_id"] = candidate[9]
+                candidates_dict["gender_pronoun_id"] = candidate[10]
+            res.append(candidates_dict)
+        return res
