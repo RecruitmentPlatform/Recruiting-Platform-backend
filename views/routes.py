@@ -7,7 +7,7 @@ from models.schemas.candidate import Candidate
 
 from .admin.singup_login_logout import login_user, signup_user, logout_user
 # from .recruiter.recruiter_route import all_recruiters, get_a_recruiter
-from .candidate.candiate_routes import list_candidates, get_candidate_by_id, mutate_candidate_record
+from .candidate.candiate_routes import list_candidates, get_candidate_by_id, mutate_candidate_record, delete_candiate_record
 
 app = Flask(__name__)
 CORS(app)
@@ -98,12 +98,15 @@ def query_candidate_by_id(candidate_id):
 def update_candidate():
     return mutate_candidate_record()
     
-
-
-
-
 # Delete a candidate record that matches the id
-# @app.route("/api/candidates/delete/<candidate_id>", methods=["DELETE"])
+#curl -X "DELETE" http://127.0.0.1:5000/api/candidates/delete/1
+@app.route("/api/candidates/delete/<candidate_id>", methods=["DELETE"])
+def delete_candidate_by_id(candidate_id):
+    return delete_candiate_record(candidate_id)
+    
+
+
+
 
 
 ## Job Opening Endpoints ##

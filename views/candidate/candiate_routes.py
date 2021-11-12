@@ -19,6 +19,7 @@ def get_candidate_by_id(candidate_id):
                                                           "phone":candidate.phone, "description":candidate.description}})
     return jsonify({"message":"Candidate does not exists."})
 
+
 def mutate_candidate_record():
     data = request.get_json()
     first_name = data.get("first_name")
@@ -42,4 +43,11 @@ def mutate_candidate_record():
     if description:
         candidate.description = description
     candidate.update_candidate()
+    return jsonify({"status":"success"})
+
+def delete_candiate_record(id):
+    candidate = Candidate.get_candidate("candidate_id", id)
+    if candidate is None:
+        return jsonify({"status":"fail", "message":"This candidate does not exits."})
+    candidate.delete_candidate(id)
     return jsonify({"status":"success"})
