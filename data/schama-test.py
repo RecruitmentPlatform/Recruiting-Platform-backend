@@ -2,7 +2,7 @@ import sqlite3
 import os
 
 PATH = os.path.dirname(__file__)
-DATAPATH = os.path.join(PATH, "test.db")
+DATAPATH = os.path.join(PATH, "database.db")
 
 def schema(dbpath = DATAPATH):
     with sqlite3.connect(DATAPATH) as conn: # object to represent DB connection
@@ -28,8 +28,7 @@ def schema(dbpath = DATAPATH):
             );"""
         cursor.execute(sql)
 
-    
+
 
 if __name__ == "__main__":
-    schema() 
-
+    schema()

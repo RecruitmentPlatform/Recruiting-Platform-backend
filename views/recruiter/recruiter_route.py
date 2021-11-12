@@ -1,9 +1,6 @@
 from flask import request, jsonify
-
 from models.utils import hash_password, verify_password, generate_session_id
-
 from models.schemas.recruiter import Recruiter
-
 
 def insert_recruiters():
     data = request.get_json()
@@ -13,7 +10,6 @@ def all_recruiters():
     #convert it to a list of hashmaps
     recruiters = Recruiter.get_all_recruiters()
     print(recruiters)
-
 
 def get_a_recruiter():
     data = request.get_json()

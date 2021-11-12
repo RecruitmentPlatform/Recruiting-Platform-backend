@@ -1,42 +1,41 @@
-# Application Class Definition
+# Interview Class Definition
 
 import sqlite3
 
-class Application():
-    tablename = "application"
+class Interview():
+    tablename = "interview"
     dbpath = "../data/database.db"
 
-    def __init__(self, date_of_application, job_opening_id, candidate_id, id = None, status = 0):
+    def __init__(self, id = None, application_id, date_start = None, date_end = None, status = 0):
         self.id = id
-        self.date_of_application
-        self.job_opening_id
-        self.candidate_id
-        self.status = status
+        self.application_id
+        self.date_start
+        self.date_end
+        self.status
 
     def insert(self):
         with sqlite3.connect(self.dbpath) as conn:
             cursor = conn.cursor()
             sql = f"""INSERT INTO {self.tablename}
-                      (date_of_application, job_opening_id, candidate_id, status)
+                      (application_id, date_start, date_end, status)
                       VALUES (?,?,?,?)"""
-            data = (self.date_of_application, self.job_opening_id, self.candidate_id, self.status)
+            data = (self.application_id, self.date_start, self.date_end, self.status)
             cursor.execute(sql, data)
-
 
     def update(self):
         with sqlite3.connect(self.dbpath) as conn:
             cursor = conn.cursor()
             sql = f"""UPDATE {self.tablename}
-                      SET date_of_application = ?,
-                          job_opening_id = ?,
-                          candidate_id = ?,
+                      SET application_id = ?,
+                          date_start = ?,
+                          date_end = ?,
                           status = ?
                       WHERE id = ?
                     """
-            data = (self.date_of_application, self.job_opening_id, self.candidate_id, self.status, self.id)
+            data = (self.application_id, self.date_start, self.date_end, self.status, self.id)
             cursor.execute(sql, data)
 
-    # Get a single application given application_id
+    # Get a single interview given interview_id
     @classmethod
     def get(cls, id):
         with sqlite3.connect(cls.dbpath) as conn:
@@ -47,43 +46,47 @@ class Application():
             cursor.execute(sql, (id))
         res =  cursor.fetchone()
         if res:
-            application = Application(id = res[0])
-            return application
+            interview = Interview(id = res[0])
+            return interview
         return None
 
-    # Get all applications for a recruiter given recruiter_id
+    # Get all interviews for a recruiter given recruiter_id
     @classmethod
     def get_by_recruiter_id(cls, id):
         with sqlite3.connect(cls.dbpath) as conn:
             cursor = conn.cursor()
             sql = f"""SELECT *
                     FROM {cls.tablename}
-                    INNER JOIN job_openings
-                        ON job_opening.id = {cls.tablename}.job_opening_id
+                    INNER JOIN application
+                        ON application.id = {cls.tablename}.application_id
+                    INNER JOIN job_opening
+                        ON job_opening.id = application.job_opening_id
                     WHERE job_opening.recruiter_id = ?"""
             cursor.execute(sql, (recruiter_id))
         res =  cursor.fetchone()
         if res:
-            application = Application(id = res[0], recruiter_id = res[1])
-            return application
+            interview = Interview(id = res[0], recruiter_id = res[1])
+            return interview
         return None
 
-    # Get all applications for a candidate given candidate_id
+    # Get all interviews for a candidate given candidate_id
     @classmethod
     def get_by_candidate_id(cls, id):
         with sqlite3.connect(cls.dbpath) as conn:
             cursor = conn.cursor()
             sql = f"""SELECT *
                     FROM {cls.tablename}
-                    WHERE candidate_id = ?"""
+                    INNER JOIN applications
+                        ON applications.id = {cls.tablename}.application_id
+                    WHERE applications.candidate_id = ?"""
             cursor.execute(sql, (candidate_id))
         res =  cursor.fetchone()
         if res:
-            application = Application(id = res[0], candidate_id = res[1])
-            return application
+            interview = Interview(id = res[0], candidate_id = res[1])
+            return interview
         return None
 
-    # Get all applications in the database.
+    # Get all interviews in the database.
     # This function should be disabled in production.
     @classmethod
     def get_all(cls):
