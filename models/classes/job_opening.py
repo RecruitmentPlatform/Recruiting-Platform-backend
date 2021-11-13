@@ -58,7 +58,7 @@ class JobOpening():
             cursor.execute(sql, (id))
         res =  cursor.fetchone()
         if res:
-            job_opening = JobOpening(id = res[0])
+            job_opening = JobOpening(id = res[0],name = res[1], description = res[2], date_published = res[3], date_deadline = res[4], date_start_job = res[5], vacancy_count = res[6], job_category_id = res[7], job_position_id = res[8], company_id = res[9], recruiter_id = res[10])
             return job_opening
         return None
 
@@ -73,7 +73,7 @@ class JobOpening():
             cursor.execute(sql, (recruiter_id))
         res =  cursor.fetchone()
         if res:
-            job_opening = JobOpening(id = res[0], recruiter_id = res[1])
+            job_opening = JobOpening(id = res[0],name = res[1], description = res[2], date_published = res[3], date_deadline = res[4], date_start_job = res[5], vacancy_count = res[6], job_category_id = res[7], job_position_id = res[8], company_id = res[9], recruiter_id = res[10])
             return job_opening
         return None
 

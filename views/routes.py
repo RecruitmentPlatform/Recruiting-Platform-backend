@@ -9,7 +9,7 @@ from models.classes.job_opening import JobOpening
 from .admin.singup_login_logout import login_user, signup_user, logout_user
 # from .recruiter.recruiter_route import all_recruiters, get_a_recruiter
 from .candidate.candidate_routes import list_candidates, get_candidate, update_candidate, delete_candidate
-from .job_opening.job_opening_routes import insert_job_opening
+from .job_opening.job_opening_routes import insert_job_opening, get_job_opening
 
 app = Flask(__name__)
 CORS(app)

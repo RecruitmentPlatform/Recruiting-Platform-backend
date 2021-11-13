@@ -21,3 +21,26 @@ def insert_job_opening():
     new_job_opening.insert()
 
     return jsonify({"status":"success"})
+
+def get_job_opening(job_opening_id):
+    job_opening = JobOpening.get(job_opening_id)
+    if job_opening:
+        return jsonify(
+            {
+                "message":"success",
+                "job_opening":{
+                    "id":job_opening.id,
+                    "name":job_opening.name,
+                    "description":job_opening.description,
+                    "date_published":job_opening.date_published,
+                    "date_deadline":job_opening.date_deadline,
+                    "date_start_job":job_opening.date_start_job,
+                    "vacancy_count":job_opening.vacancy_count,
+                    "job_category_id":job_opening.job_category_id,
+                    "job_position_id":job_opening.job_position_id,
+                    "company_id":job_opening.company_id,
+                    "recruiter_id":job_opening.recruiter_id
+                }
+            }
+        )
+    return jsonify({"message":"Job opening does not exists."})
