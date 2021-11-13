@@ -4,8 +4,8 @@ from models.classes.candidate import Candidate
 def list_candidates():
     candidates = Candidate.get_all()
     if candidates:
-        return jsonify({"message":"success", "candidates":candidates})
-    return jsonify({"message":"No candidates in database."})
+        return jsonify({"status":"success", "candidates":candidates})
+    return jsonify({"status":"fail", "message":"No candidates in database."})  #added status to use in frontend
 
 def get_candidate(candidate_id, criteria="id"):
     candidate = Candidate.get(criteria, candidate_id)
@@ -26,7 +26,7 @@ def get_candidate(candidate_id, criteria="id"):
                 }
             }
         )
-    return jsonify({"message":"Candidate does not exists."})
+    return jsonify({"status":"fail", "message":"Candidate does not exists."}) #added status to use in frontend
 
 def update_candidate():
     data = request.get_json()
@@ -39,7 +39,7 @@ def update_candidate():
 
     candidate = Candidate.get("session_id", session_id)
     if candidate is None:
-        return jsonify({"Status":"fail"})
+        return jsonify({"status":"fail"})
     if first_name:
         candidate.first_name = first_name
     if last_name:
@@ -57,5 +57,5 @@ def delete_candidate(candidate_id):
     candidate = Candidate.get("candidate_id", candidate_id)
     if candidate:
         Candidate.delete(candidate_id)
-        jsonify({"message":"success"})
-    return jsonify({"message":"fail"})
+        jsonify({"status":"success"})
+    return jsonify({"status":"fail"})
