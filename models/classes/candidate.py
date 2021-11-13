@@ -2,7 +2,7 @@
 
 import sqlite3
 
-class Candidate():
+class Account():
     tablename = "candidate"
     dbpath = "../data/database.db"
 
@@ -19,6 +19,7 @@ class Candidate():
         self.gender_id = gender_id
         self.gender_pronoun_id = gender_pronoun_id
 
+class Candidate(Account):
     def insert(self):
         with sqlite3.connect(self.dbpath) as conn:
             cursor = conn.cursor()
@@ -62,7 +63,7 @@ class Candidate():
             return Candidate.query("email", data)
         elif criteria == "session_id":
             return Candidate.query("session_id", data)
-        elif criteria == "candidate_id":
+        elif criteria == "id":
             return Candidate.query("id", data)
 
     @classmethod
@@ -93,7 +94,6 @@ class Candidate():
         res = []
         candidates_dict = {}
         for candidate in candidates:
-            print("candidate",candidate)
             if candidate[0] is None:
                 continue
             else:

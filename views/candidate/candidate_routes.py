@@ -1,6 +1,5 @@
 from flask import request, jsonify
-from models.utils import hash_password, verify_password, generate_session_id
-from models.schemas.candidate import Candidate
+from models.classes.candidate import Candidate
 
 def list_candidates():
     candidates = Candidate.get_all()
@@ -8,13 +7,28 @@ def list_candidates():
         return jsonify({"message":"success", "candidates":candidates})
     return jsonify({"message":"No candidates in database."})
 
-def get_candidate_by_id(candidate_id):
-    candidate = Candidate.get("candidate_id", candidate_id)
+def get_candidate(candidate_id, criteria="id"):
+    candidate = Candidate.get(criteria, candidate_id)
     if candidate:
-        return jsonify({"message":"success", "candidate":{"id":candidate.id, "first_name":candidate.first_name,"last_name":candidate.last_name, "email":candidate.email,"phone":candidate.phone, "description":candidate.description}})
+        return jsonify(
+            {
+                "message":"success",
+                "candidate":{
+                    "id":candidate.id,
+                    "first_name":candidate.first_name,
+                    "last_name":candidate.last_name,
+                    "email":candidate.email,
+                    "phone":candidate.phone,
+                    "description":candidate.description,
+                    "ethnicity_id":candidate.ethnicity_id,
+                    "gender_id":candidate.gender_id,
+                    "gender_pronoun_id":candidate.gender_pronoun_id
+                }
+            }
+        )
     return jsonify({"message":"Candidate does not exists."})
 
-def mutate_candidate_record():
+def update_candidate():
     data = request.get_json()
     first_name = data.get("first_name")
     last_name = data.get("last_name")
@@ -39,7 +53,7 @@ def mutate_candidate_record():
     candidate.update_candidate()
     return jsonify({"status":"success"})
 
-def delete_candidate_record(candidate_id):
+def delete_candidate(candidate_id):
     candidate = Candidate.get("candidate_id", candidate_id)
     if candidate:
         Candidate.delete(candidate_id)

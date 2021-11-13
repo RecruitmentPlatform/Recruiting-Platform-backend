@@ -8,16 +8,16 @@ class JobOpening():
 
     def __init__(self, id = None, name = None, description = None, date_published = None, date_deadline = None, date_start_job = None, vacancy_count = None, job_category_id = None, job_position_id = None, company_id = None, recruiter_id = None):
         self.id = id
-        self.name
-        self.description
-        self.date_published
-        self.date_deadline
-        self.date_start_job
-        self.vacancy_count
-        self.job_category_id
-        self.job_position_id
-        self.company_id
-        self.recruiter_id
+        self.name = name
+        self.description = description
+        self.date_published = date_published
+        self.date_deadline = date_deadline
+        self.date_start_job = date_start_job
+        self.vacancy_count = vacancy_count
+        self.job_category_id = job_category_id
+        self.job_position_id = job_position_id
+        self.company_id = company_id
+        self.recruiter_id = recruiter_id
 
     def insert(self):
         with sqlite3.connect(self.dbpath) as conn:

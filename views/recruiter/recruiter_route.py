@@ -1,6 +1,6 @@
 from flask import request, jsonify
 from models.utils import hash_password, verify_password, generate_session_id
-from models.schemas.recruiter import Recruiter
+from models.classes.recruiter import Recruiter
 
 def insert_recruiters():
     data = request.get_json()
