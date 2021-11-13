@@ -46,10 +46,6 @@ def api_logout():
 # Update a company record
 # @app.route("/api/companies/update", methods=["GET"])
 
-# Delete a company record that matches the id
-# @app.route("/api/companies/delete/<company_id>", methods=["GET"])
-
-
 ## Recruiter Endpoints ##
 
 # Get a list of all recruiters

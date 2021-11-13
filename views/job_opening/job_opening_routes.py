@@ -20,4 +20,4 @@ def insert_job_opening():
     new_job_opening = JobOpening(name=name,description=description,date_published=date_published,date_deadline=date_deadline,date_start_job=date_start_job,vacancy_count=vacancy_count,job_category_id=job_category_id,job_position_id=job_position_id,company_id=company_id,recruiter_id=recruiter_id)
     new_job_opening.insert()
 
-    return jsonify({"status":"success",  "job_opening_id":job_opening_id})
+    return jsonify({"status":"success"})
