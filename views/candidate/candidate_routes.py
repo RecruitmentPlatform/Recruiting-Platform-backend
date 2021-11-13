@@ -5,7 +5,7 @@ def list_candidates():
     candidates = Candidate.get_all()
     if candidates:
         return jsonify({"message":"success", "candidates":candidates})
-    return jsonify({"message":"No candidates in database."})
+    return jsonify({"status":"fail", "message":"No candidates in database."})
 
 def get_candidate(candidate_id, criteria="id"):
     candidate = Candidate.get(criteria, candidate_id)
@@ -26,7 +26,7 @@ def get_candidate(candidate_id, criteria="id"):
                 }
             }
         )
-    return jsonify({"message":"Candidate does not exists."})
+    return jsonify({"status":"fail", "message":"Candidate does not exists."})
 
 def update_candidate():
     data = request.get_json()

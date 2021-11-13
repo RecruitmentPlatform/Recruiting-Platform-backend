@@ -94,7 +94,7 @@ class Candidate(Account):
         res = []
         candidates_dict = {}
         for candidate in candidates:
-            if candidate[0] is None:
+            if candidate[1] is None or candidate[2] is None: #if skip candidate doesn't register fname/lname
                 continue
             else:
                 candidates_dict["id"] = candidate[0]
