@@ -24,7 +24,7 @@ class Candidate():
             cursor = conn.cursor()
             sql = f"""INSERT INTO {self.tablename}
                       (first_name, last_name, email, phone, description, pass_hash, session_id, ethnicity_id, gender_id, gender_pronoun_id)
-                      VALUES (?,?,?,?,?,?,?,?,?,?,?)"""
+                      VALUES (?,?,?,?,?,?,?,?,?,?)"""
             data = (self.first_name, self.last_name, self.email, self.phone, self.description, self.pass_hash, self.session_id, self.ethnicity_id, self.gender_id, self.gender_pronoun_id)
             cursor.execute(sql, data)
 

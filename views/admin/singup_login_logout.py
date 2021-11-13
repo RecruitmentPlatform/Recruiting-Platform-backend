@@ -11,7 +11,7 @@ def signup_user():
     password = data.get("password")
 
     # Query database to see if user already exists
-    user = Candidate.get_candidate("email", email)
+    user = Candidate.get("email", email)
     if user:
         return jsonify({"status":"fail", "message":"This account already exists."})
 
@@ -21,7 +21,7 @@ def signup_user():
     session_id = generate_session_id()
 
     new_user = Candidate(email = email, pass_hash = password_hash, session_id = str(session_id))
-    new_user.insert_candidate()
+    new_user.insert()
     return jsonify({"status":"success",  "session_id":session_id})
 
 
@@ -31,7 +31,7 @@ def login_user():
     password = data.get("password")
 
     #query user
-    user = Candidate.get_candidate("email",email)
+    user = Candidate.get("email",email)
     if user is None:
         return jsonify({"status": "fail", "message":"Account does not exist"})
 
@@ -41,7 +41,7 @@ def login_user():
     if auth == True and email == user.email:
         session_id = str(generate_session_id())
         user.session_id = session_id
-        user.update_candidate()
+        user.update()
         return jsonify({"status":"success", "session_id":session_id})
     return jsonify({"status":"fail", "message":"Login failed."})
 
@@ -50,11 +50,11 @@ def logout_user():
     session_id = data.get("session_id")
 
     #query user with session_id
-    user = Candidate.get_candidate("session_id", session_id)
+    user = Candidate.get("session_id", session_id)
 
     if user is None:
         return jsonify({"status":"logout failed"})
 
     user.session_id = None
-    user.update_candidate()
+    user.update()
     return jsonify({"status":"success"})
