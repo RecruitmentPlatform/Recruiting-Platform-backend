@@ -54,7 +54,7 @@ class Candidate(Account):
             sql = f"""DELETE
                       FROM {self.tablename}
                       WHERE id = ?"""
-            cursor.execute(sql, id)
+            cursor.execute(sql, (id,))
 
     @classmethod
     def get(cls, criteria, data):
@@ -73,10 +73,10 @@ class Candidate(Account):
             sql = f"""SELECT *
                     FROM {cls.tablename}
                     WHERE {criteria} = ?"""
-            cursor.execute(sql, (data,))
+            cursor.execute(sql, data)
         res =  cursor.fetchone()
         if res:
-            user = Candidate(id = res[0],first_name=res[1], last_name=res[2],email=res[3],phone=res[4],description=res[5],pass_hash=res[6],session_id=res[7])
+            user = Candidate(id = res[0],first_name=res[1], last_name=res[2],email=res[3],phone=res[4],description=res[5],pass_hash=res[6],session_id=res[7],ethnicity_id=res[8],gender_id=res[9],gender_pronoun_id=res[10])
             return user
         return None
 

@@ -5,11 +5,13 @@ from flask_cors import CORS
 # from models.schemas.candidate import Job Opening
 from models.classes.candidate import Candidate
 from models.classes.job_opening import JobOpening
+from models.classes.application import Application
 
 from .admin.singup_login_logout import login_user, signup_user, logout_user
 # from .recruiter.recruiter_route import all_recruiters, get_a_recruiter
 from .candidate.candidate_routes import list_candidates, get_candidate, update_candidate, delete_candidate
-from .job_opening.job_opening_routes import insert_job_opening, get_job_opening
+from .job_opening.job_opening_routes import list_job_openings, insert_job_opening, get_job_opening, update_job_opening, delete_job_opening
+from .application.application_routes import list_applications, insert_application, get_application, update_application, delete_application
 
 app = Flask(__name__)
 CORS(app)
@@ -84,9 +86,6 @@ def api_list_candidates():
 def api_get_candidate(candidate_id,criteria="id"):
     return get_candidate(candidate_id, criteria)
 
-# Add a candidate record
-# @app.route("/api/candidates/add", methods=["POST"])
-
 # Update a candidate record
 # curl -X PUT http://127.0.0.1:5000/api/candidates/update -d '{"first_name":"test", "last_name":"user", "email":"", "phone":"1234567", "description":"swe", "session_id"}' -H "Content-Type: application/json"
 @app.route("/api/candidates/update", methods=["PUT"])
@@ -103,9 +102,13 @@ def api_delete_candidate(candidate_id):
 ## Job Opening Endpoints ##
 
 # Get a list of all job openings
-# @app.route("/api/job-openings/", methods=["GET"])
+# curl -X GET http://127.0.0.1:5000/api/job-openings
+@app.route("/api/job-openings/", methods=["GET"])
+def api_list_job_openings():
+    return list_job_openings()
 
 # Get a single job opening that matches the id
+# curl -X GET http://127.0.0.1:5000/api/candidates/1
 @app.route("/api/job-openings/<job_opening_id>", methods=["GET"])
 def api_get_job_opening(job_opening_id):
     return get_job_opening(job_opening_id)
@@ -117,34 +120,49 @@ def api_insert_job_opening():
     return insert_job_opening()
 
 # Update a job opening record
-# @app.route("/api/job-openings/update", methods=["GET"])
+@app.route("/api/job-openings/update", methods=["PUT"])
+def api_update_job_opening():
+    return update_job_opening()
 
 # Delete a job opening record that matches the id
-# @app.route("/api/job-openings/delete/<job_opening_id>", methods=["GET"])
+@app.route("/api/job-openings/delete/<job_opening_id>", methods=["GET"])
+def api_delete_job_opening(job_opening_id):
+    return delete_job_opening(job_opening_id)
 
 
 #################################
 ## Application Endpoints ##
 
+# Get a list of all applications
+# curl -X GET http://127.0.0.1:5000/api/applications
+@app.route("/api/applications/", methods=["GET"])
+def api_list_applications():
+    return list_applications()
+
 # Get a single application that matches the id
-# @app.route("/api/applications/<application_id>", methods=["GET"])
+# curl -X GET http://127.0.0.1:5000/api/applications/1
+@app.route("/api/applications/<application_id>", methods=["GET"])
+def api_get_application(application_id):
+    return get_application(application_id)
 
 # Add an application record
-# @app.route("/api/applications/add", methods=["GET"])
+# curl -X POST http://127.0.0.1:5000/api/applications/add -d '{"date_of_application": 12345, "job_opening_id": 12345, "candidate_id": 56789, "status": 1}' -H "Content-Type: application/json"
+@app.route("/api/applications/add", methods=["POST"])
+def api_insert_application():
+    return insert_application()
 
 # Update an application record
-# @app.route("/api/applications/update", methods=["GET"])
+@app.route("/api/applications/update", methods=["PUT"])
+def api_update_application():
+    return update_application()
 
 # Delete an application record that matches the id
-# @app.route("/api/applications/delete/<application_id>", methods=["GET"])
+@app.route("/api/applications/delete/<application_id>", methods=["GET"])
+def api_delete_application(application_id):
+    return delete_application(application_id)
 
 # Get all applications for a job given the job opening ID
 # @app.route("/api/applications/<job_opening_id>", methods=["GET"])
 
 # Get all applications for a candidate given the candidate ID
 # @app.route("/api/applications/<job_opening_id>", methods=["GET"])
-
-#################################
-## Process Endpoints ##
-# Get the process for a job given the job ID
-# @app.route("/api/processes/", methods=["GET"])

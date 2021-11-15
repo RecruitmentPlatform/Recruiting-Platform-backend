@@ -26,7 +26,7 @@ def get_candidate(candidate_id, criteria="id"):
                 }
             }
         )
-    return jsonify({"status":"fail", "message":"Candidate does not exists."}) #added status to use in frontend
+    return jsonify({"status":"fail","message":"Candidate does not exists."})
 
 def update_candidate():
     data = request.get_json()
@@ -36,6 +36,9 @@ def update_candidate():
     phone = data.get("phone")
     description = data.get("description")
     session_id = data.get("session_id")
+    ethnicity_id = data.get("ethnicity_id")
+    gender_id = data.get("gender_id")
+    gender_pronoun_id= data.get("gender_pronoun_id")
 
     candidate = Candidate.get("session_id", session_id)
     if candidate is None:
@@ -50,11 +53,17 @@ def update_candidate():
         candidate.phone = phone
     if description:
         candidate.description = description
-    candidate.update_candidate()
+    if ethnicity_id:
+        candidate.ethnicity_id = ethnicity_id
+    if gender_id:
+        candidate.gender_id = gender_id
+    if gender_pronoun_id:
+        candidate.gender_pronoun_id = gender_pronoun_id
+    candidate.update()
     return jsonify({"status":"success"})
 
 def delete_candidate(candidate_id):
-    candidate = Candidate.get("candidate_id", candidate_id)
+    candidate = Candidate.get("id", candidate_id)
     if candidate:
         Candidate.delete(candidate_id)
         jsonify({"status":"success"})
