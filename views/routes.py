@@ -13,6 +13,7 @@ from .candidate.candidate_routes import list_candidates, get_candidate, update_c
 from .job_opening.job_opening_routes import list_job_openings, insert_job_opening, get_job_opening, update_job_opening, delete_job_opening
 from .application.application_routes import list_applications, insert_application, get_application, update_application, delete_application
 from .interview.interview_routes import list_interviews, insert_interview, get_interview, update_interview, delete_interview
+#from .experience.experience_routes import list_experiences, insert_experience, get_experience, update_experience, delete_experience
 
 app = Flask(__name__)
 CORS(app)
@@ -20,17 +21,17 @@ CORS(app)
 # Pretty print JSON results
 app.config['JSONIFY_PRETTYPRINT_REGULAR'] = True
 
-#curl -X POST http://127.0.0.1:5000/api/signup -d '{"email":"test@gmail.com","password":"11111"}'  -H "Content-Type: application/json"
+# curl -X POST http://127.0.0.1:5000/api/signup -d '{"email":"test2@gmail.com","password":"21111"}'  -H "Content-Type: application/json"
 @app.route("/api/signup", methods=["POST"])
 def api_signup():
     return signup_user()
 
-#curl -X POST http://127.0.0.1:5000/api/login -d '{"email":"test@gmail.com","password":"11111"}'  -H "Content-Type: application/json"
+# curl -X POST http://127.0.0.1:5000/api/login -d '{"email":"test@gmail.com","password":"11111"}'  -H "Content-Type: application/json"
 @app.route("/api/login", methods=["POST"])
 def api_login():
     return login_user()
 
-#curl -X POST http://127.0.0.1:5000/api/logout -d '{"session_id":"enter session_id here"}'  -H "Content-Type: application/json"
+# curl -X POST http://127.0.0.1:5000/api/logout -d '{"session_id":"enter session_id here"}'  -H "Content-Type: application/json"
 @app.route("/api/logout", methods=["POST"])
 def api_logout():
     return logout_user()
@@ -83,9 +84,9 @@ def api_list_candidates():
 
 # Get a single candidate that matches the id
 #curl -X GET http://127.0.0.1:5000/api/candidates/1
-@app.route("/api/candidates/<candidate_id>/<criteria>", methods=["GET"])
-def api_get_candidate(candidate_id,criteria="id"):
-    return get_candidate(candidate_id, criteria)
+@app.route("/api/candidates/<criteria>/<criteria_id>", methods=["GET"])
+def api_get_candidate(criteria_id,criteria="id"):
+    return get_candidate(criteria_id, criteria)
 
 # Update a candidate record
 # curl -X PUT http://127.0.0.1:5000/api/candidates/update -d '{"first_name":"test", "last_name":"user", "email":"", "phone":"1234567", "description":"swe", "session_id"}' -H "Content-Type: application/json"
@@ -171,7 +172,7 @@ def api_delete_application(application_id):
 ## Interview Endpoints ##
 
 # Get a list of all interviews
-# curl -X GET http://127.0.0.1:5000/api/interview
+# curl -X GET http://127.0.0.1:5000/api/interviews
 @app.route("/api/interviews/", methods=["GET"])
 def api_list_interviews():
     return list_interviews()
@@ -183,7 +184,7 @@ def api_get_interview(interview_id):
     return get_interview(interview_id)
 
 # Add an interview record
-# curl -X POST http://127.0.0.1:5000/api/interview/add -d '{"application_id": 12345, "date_start": 12345, "date_end": 56789, "status": 1}' -H "Content-Type: application/json"
+# curl -X POST http://127.0.0.1:5000/api/interviews/add -d '{"application_id": 12345, "date_start": 12345, "date_end": 56789, "status": 1}' -H "Content-Type: application/json"
 @app.route("/api/interviews/add", methods=["POST"])
 def api_insert_interview():
     return insert_interview()
@@ -198,5 +199,34 @@ def api_update_interview():
 def api_delete_interview(interview_id):
     return delete_interview(interview_id)
 
-# Get all interviews for a candidate given the candidate ID
-# @app.route("/api/applications/<job_opening_id>", methods=["GET"])
+
+#################################
+## Experience Endpoints ##
+
+# Get a list of all experiences
+# curl -X GET http://127.0.0.1:5000/api/experiences
+@app.route("/api/experiences/", methods=["GET"])
+def api_list_experience():
+    return list_experience()
+
+# Get a single experience that matches the id
+# curl -X GET http://127.0.0.1:5000/api/experiences/1
+@app.route("/api/experiences/<experience_id>", methods=["GET"])
+def api_get_experience(experience_id):
+    return get_experience(experience_id)
+
+# Add an experience record
+# curl -X POST http://127.0.0.1:5000/api/experiences/add -d '{}' -H "Content-Type: application/json"
+@app.route("/api/experiences/add", methods=["POST"])
+def api_insert_experience():
+    return insert_experience()
+
+# Update an experience record
+@app.route("/api/experiences/update", methods=["PUT"])
+def api_update_experience():
+    return update_experience()
+
+# Delete an experience record that matches the id
+@app.route("/api/experiences/delete/<experience_id>", methods=["GET"])
+def api_delete_experience(experience_id):
+    return delete_experience(experience_id)
