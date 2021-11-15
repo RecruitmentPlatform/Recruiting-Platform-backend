@@ -6,12 +6,12 @@ class Interview():
     tablename = "interview"
     dbpath = "../data/database.db"
 
-    def __init__(self, id = None, application_id, date_start = None, date_end = None, status = 0):
+    def __init__(self, application_id, id = None, date_start = None, date_end = None, status = 0):
         self.id = id
-        self.application_id
-        self.date_start
-        self.date_end
-        self.status
+        self.application_id = application_id
+        self.date_start = date_start
+        self.date_end = date_end
+        self.status = status
 
     def insert(self):
         with sqlite3.connect(self.dbpath) as conn:
@@ -46,7 +46,7 @@ class Interview():
             cursor.execute(sql, (id))
         res =  cursor.fetchone()
         if res:
-            interview = Interview(id = res[0])
+            interview = Interview(id = res[0], application_id = res[1], date_start = res[2], date_end = res[3], status = res[4])
             return interview
         return None
 
@@ -65,7 +65,7 @@ class Interview():
             cursor.execute(sql, (recruiter_id))
         res =  cursor.fetchone()
         if res:
-            interview = Interview(id = res[0], recruiter_id = res[1])
+            interview = Interview(id = res[0], application_id = res[1], date_start = res[2], date_end = res[3], status = res[4])
             return interview
         return None
 
@@ -82,7 +82,7 @@ class Interview():
             cursor.execute(sql, (candidate_id))
         res =  cursor.fetchone()
         if res:
-            interview = Interview(id = res[0], candidate_id = res[1])
+            interview = Interview(id = res[0], application_id = res[1], date_start = res[2], date_end = res[3], status = res[4])
             return interview
         return None
 

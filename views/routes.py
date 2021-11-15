@@ -12,6 +12,7 @@ from .admin.singup_login_logout import login_user, signup_user, logout_user
 from .candidate.candidate_routes import list_candidates, get_candidate, update_candidate, delete_candidate
 from .job_opening.job_opening_routes import list_job_openings, insert_job_opening, get_job_opening, update_job_opening, delete_job_opening
 from .application.application_routes import list_applications, insert_application, get_application, update_application, delete_application
+from .interview.interview_routes import list_interviews, insert_interview, get_interview, update_interview, delete_interview
 
 app = Flask(__name__)
 CORS(app)
@@ -129,7 +130,6 @@ def api_update_job_opening():
 def api_delete_job_opening(job_opening_id):
     return delete_job_opening(job_opening_id)
 
-
 #################################
 ## Application Endpoints ##
 
@@ -165,4 +165,38 @@ def api_delete_application(application_id):
 # @app.route("/api/applications/<job_opening_id>", methods=["GET"])
 
 # Get all applications for a candidate given the candidate ID
+# @app.route("/api/applications/<job_opening_id>", methods=["GET"])
+
+#################################
+## Interview Endpoints ##
+
+# Get a list of all interviews
+# curl -X GET http://127.0.0.1:5000/api/interview
+@app.route("/api/interviews/", methods=["GET"])
+def api_list_interviews():
+    return list_interviews()
+
+# Get a single interview that matches the id
+# curl -X GET http://127.0.0.1:5000/api/interviews/1
+@app.route("/api/interviews/<interview_id>", methods=["GET"])
+def api_get_interview(interview_id):
+    return get_interview(interview_id)
+
+# Add an interview record
+# curl -X POST http://127.0.0.1:5000/api/interview/add -d '{"application_id": 12345, "date_start": 12345, "date_end": 56789, "status": 1}' -H "Content-Type: application/json"
+@app.route("/api/interviews/add", methods=["POST"])
+def api_insert_interview():
+    return insert_interview()
+
+# Update an interview record
+@app.route("/api/interviews/update", methods=["PUT"])
+def api_update_interview():
+    return update_interview()
+
+# Delete an interview record that matches the id
+@app.route("/api/interviews/delete/<interview_id>", methods=["GET"])
+def api_delete_interview(interview_id):
+    return delete_interview(interview_id)
+
+# Get all interviews for a candidate given the candidate ID
 # @app.route("/api/applications/<job_opening_id>", methods=["GET"])
