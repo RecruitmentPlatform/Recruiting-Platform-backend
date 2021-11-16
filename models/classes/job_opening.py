@@ -55,7 +55,7 @@ class JobOpening():
             sql = f"""SELECT *
                     FROM {cls.tablename}
                     WHERE id = ?"""
-            cursor.execute(sql, (id))
+            cursor.execute(sql, (id,))
         res =  cursor.fetchone()
         if res:
             job_opening = JobOpening(id = res[0],name = res[1], description = res[2], date_published = res[3], date_deadline = res[4], date_start_job = res[5], vacancy_count = res[6], job_category_id = res[7], job_position_id = res[8], company_id = res[9], recruiter_id = res[10])

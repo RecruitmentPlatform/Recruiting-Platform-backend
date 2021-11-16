@@ -1,15 +1,14 @@
-# Company Class Definition
+# ID Title Class Definition
 
 import sqlite3
+import abc
 
-class Company():
-    tablename = "company"
+class Data():
     dbpath = "../data/database.db"
 
-    def __init__(self, id = None, name = None, description = None):
+    def __init__(self, id = None, name = None):
         self.id = id
         self.name = name
-        self.description = description
 
     def insert(self):
         with sqlite3.connect(self.dbpath) as conn:
@@ -38,19 +37,46 @@ class Company():
             sql = f"""SELECT *
                     FROM {cls.tablename}
                     WHERE id = ?"""
-            cursor.execute(sql, (id,))
+            cursor.execute(sql, (id))
         res =  cursor.fetchone()
         if res:
             user = Company(id = res[0])
             return user
         return None
 
-    # This function should be disabled in production.
-    @classmethod
-    def get_all(cls):
-        with sqlite3.connect(cls.dbpath) as conn:
-            cursor = conn.cursor()
-            sql = f"""SELECT *
-                    FROM {cls.tablename}"""
-            cursor.execute(sql)
-        return cursor.fetchall()
+    @abc.abstractmethod
+    def get_tablename(self):
+        pass
+
+# Candidate Data Classes
+class Ethnicity(Data):
+    def get_tablename(self):
+        return 'ethnicity'
+class GenderPronoun(Data):
+    def get_tablename(self):
+        return 'gender_pronoun'
+class Gender(Data):
+    def get_tablename(self):
+        return 'ethnicity'
+
+# Education Data Classes
+class Degree(Data):
+    def get_tablename(self):
+        return 'degree'
+class Major(Data):
+    def get_tablename(self):
+        return 'major'
+class College(Data):
+    def get_tablename(self):
+        return 'college'
+
+# Job Opening Data Classes
+class JobCategory(Data):
+    def get_tablename(self):
+        return 'job_category'
+class JobPosition(Data):
+    def get_tablename(self):
+        return 'job_position'
+class Company(Data):
+    def get_tablename(self):
+        return 'company'

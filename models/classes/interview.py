@@ -43,7 +43,7 @@ class Interview():
             sql = f"""SELECT *
                     FROM {cls.tablename}
                     WHERE id = ?"""
-            cursor.execute(sql, (id))
+            cursor.execute(sql, (id,))
         res =  cursor.fetchone()
         if res:
             interview = Interview(id = res[0], application_id = res[1], date_start = res[2], date_end = res[3], status = res[4])

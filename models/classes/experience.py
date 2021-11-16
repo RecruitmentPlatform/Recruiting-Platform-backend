@@ -63,7 +63,7 @@ class Experience():
             sql = f"""SELECT *
                     FROM {cls.tablename}
                     WHERE id = ?"""
-            cursor.execute(sql, (id))
+            cursor.execute(sql, (id,))
         res =  cursor.fetchone()
         if res:
             experience = Experience(id = res[0], candidate_id = res[1], company_id = res[2], date_start = res[3], date_end = res[4], job_position_id = res[5], job_category_id = res[6], employment_type_id = res[7], location = res[8], description = res[9])

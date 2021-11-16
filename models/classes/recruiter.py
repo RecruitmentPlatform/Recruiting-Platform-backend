@@ -54,7 +54,7 @@ class Recruiter():
             sql = f"""SELECT *
                     FROM {cls.tablename}
                     WHERE id = ?"""
-            cursor.execute(sql, (id))
+            cursor.execute(sql, (id,))
         res =  cursor.fetchone()
         if res:
             user = Recruiter(id = res[0])
