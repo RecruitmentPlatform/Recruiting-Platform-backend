@@ -13,7 +13,8 @@ from .candidate.candidate_routes import list_candidates, get_candidate, update_c
 from .job_opening.job_opening_routes import list_job_openings, insert_job_opening, get_job_opening, update_job_opening, delete_job_opening
 from .application.application_routes import list_applications, insert_application, get_application, update_application, delete_application
 from .interview.interview_routes import list_interviews, insert_interview, get_interview, update_interview, delete_interview
-#from .experience.experience_routes import list_experiences, insert_experience, get_experience, update_experience, delete_experience
+from .experience.experience_routes import list_experiences, insert_experience, get_experience, update_experience, delete_experience
+from .education.education_routes import list_educations, insert_education, get_education, update_education, delete_education
 
 app = Flask(__name__)
 CORS(app)
@@ -78,7 +79,7 @@ def api_logout():
 
 # Get a list of all candidates
 # curl -X GET http://127.0.0.1:5000/api/candidates
-@app.route("/api/candidates/all", methods=["GET"])
+@app.route("/api/candidates/", methods=["GET"])
 def api_list_candidates():
     return list_candidates()
 
@@ -230,3 +231,34 @@ def api_update_experience():
 @app.route("/api/experiences/delete/<experience_id>", methods=["GET"])
 def api_delete_experience(experience_id):
     return delete_experience(experience_id)
+
+#################################
+## Education Endpoints ##
+
+# Get a list of all educations
+# curl -X GET http://127.0.0.1:5000/api/educations
+@app.route("/api/educations/", methods=["GET"])
+def api_list_education():
+    return list_education()
+
+# Get a single education that matches the id
+# curl -X GET http://127.0.0.1:5000/api/educations/1
+@app.route("/api/educations/<education_id>", methods=["GET"])
+def api_get_education(education_id):
+    return get_education(education_id)
+
+# Add an education record
+# curl -X POST http://127.0.0.1:5000/api/education/add -d '{}' -H "Content-Type: application/json"
+@app.route("/api/educations/add", methods=["POST"])
+def api_insert_education():
+    return insert_education()
+
+# Update an education record
+@app.route("/api/educations/update", methods=["PUT"])
+def api_update_education():
+    return update_education()
+
+# Delete an education record that matches the id
+@app.route("/api/educations/delete/<education_id>", methods=["GET"])
+def api_delete_education(education_id):
+    return delete_education(education_id)

@@ -33,18 +33,8 @@ class Candidate(Account):
         with sqlite3.connect(self.dbpath) as conn:
             cursor = conn.cursor()
             sql = f"""UPDATE {self.tablename}
-                      SET first_name = ?,
-                          last_name = ?,
-                          email = ?,
-                          phone = ?,
-                          description = ?,
-                          pass_hash = ?,
-                          session_id = ?,
-                          ethnicity_id = ?,
-                          gender_id = ?,
-                          gender_pronoun_id = ?
-                      WHERE id = ?
-                    """
+                      SET first_name = ?, last_name = ?, email = ?, phone = ?, description = ?, pass_hash = ?, session_id = ?, ethnicity_id = ?, gender_id = ?, gender_pronoun_id = ?
+                      WHERE id = ?"""
             data = (self.first_name, self.last_name, self.email, self.phone, self.description, self.pass_hash, self.session_id, self.ethnicity_id, self.gender_id, self.gender_pronoun_id, self.id)
             cursor.execute(sql, data)
 
@@ -85,26 +75,31 @@ class Candidate(Account):
     # This function should be disabled in production.
     @classmethod
     def get_all(cls):
+        # Define results
+        results = []
+        # Perform sql connection and execute command on the connection conn
         with sqlite3.connect(cls.dbpath) as conn:
+            conn.row_factory = sqlite3.Row
             cursor = conn.cursor()
-            sql = f"""SELECT *
-                    FROM {cls.tablename}"""
+            sql = f"""SELECT * FROM {cls.tablename}"""
             cursor.execute(sql)
-        candidates =  cursor.fetchall()
-        res = []
-        candidates_dict = {}
-        for candidate in candidates:
-            if candidate[1] is None or candidate[2] is None: #if skip candidate doesn't register fname/lname
-                continue
-            else:
-                candidates_dict["id"] = candidate[0]
-                candidates_dict["first_name"] = candidate[1]
-                candidates_dict["last_name"] = candidate[2]
-                candidates_dict["email"] = candidate[3]
-                candidates_dict["phone"] = candidate[4]
-                candidates_dict["description"] = candidate[5]
-                candidates_dict["ethnicity_id"] = candidate[8]
-                candidates_dict["gender_id"] = candidate[9]
-                candidates_dict["gender_pronoun_id"] = candidate[10]
-            res.append(candidates_dict)
-        return res
+        # Save sql results
+        rows =  cursor.fetchall()
+        # Define columns that should not be returned publicly
+        private_columns = {'pass_hash','session_id'}
+        # Iterate over sql results
+        for row in rows:
+            # Create list to save row values within
+            result = {}
+            # Get sql results column names
+            columns = row.keys()
+            # Loop over the sql result column names
+            for column in columns:
+                # Skip private columns
+                if column in private_columns:
+                    continue
+                # Use column names to index sql results and save in result list
+                result[column] = row[column]
+            # Append entire result to results array
+            results.append(result)
+        return results

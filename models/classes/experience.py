@@ -1,16 +1,5 @@
 # Experience Class Definition
 
-#	"id"
-#	"candidate_id"	INTEGER NOT NULL,
-#	"company_id"	INTEGER,
-#	"date_start"	INTEGER,
-#	"date_end"	INTEGER,
-#	"job_position_id"	INTEGER NOT NULL,
-#	"job_category_id"	INTEGER NOT NULL,
-#	"location"	TEXT,
-#	"employment_type_id"	INTEGER,
-#	"description"	TEXT,
-
 import sqlite3
 
 class Experience():
