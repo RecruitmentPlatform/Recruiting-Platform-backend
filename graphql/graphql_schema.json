@@ -1,0 +1,761 @@
+type Application {
+  id: Int!
+  date: Int!
+  openingId: Int!
+  candidateId: Int!
+  status: Int!
+  interviews(
+    limit: Int
+    order: String
+
+    """
+    A JSON object conforming the the shape specified in http://docs.sequelizejs.com/en/latest/docs/querying/
+    """
+    where: SequelizeJSON
+    offset: Int
+  ): [Interview]
+  opening: Opening
+  candidate: Candidate
+}
+
+type Candidate {
+  id: Int!
+  first: String
+  last: String
+  email: String!
+  phone: String
+  description: String
+  hash: String!
+  session: Int
+  ethnicityId: Int
+  genderId: Int
+  pronounId: Int
+  experiences(
+    limit: Int
+    order: String
+
+    """
+    A JSON object conforming the the shape specified in http://docs.sequelizejs.com/en/latest/docs/querying/
+    """
+    where: SequelizeJSON
+    offset: Int
+  ): [Experience]
+  educations(
+    limit: Int
+    order: String
+
+    """
+    A JSON object conforming the the shape specified in http://docs.sequelizejs.com/en/latest/docs/querying/
+    """
+    where: SequelizeJSON
+    offset: Int
+  ): [Education]
+  applications(
+    limit: Int
+    order: String
+
+    """
+    A JSON object conforming the the shape specified in http://docs.sequelizejs.com/en/latest/docs/querying/
+    """
+    where: SequelizeJSON
+    offset: Int
+  ): [Application]
+  ethnicity: Ethnicity
+  gender: Gender
+  pronoun: Pronoun
+}
+
+type Category {
+  id: Int!
+  title: String!
+  description: String
+  experiences(
+    limit: Int
+    order: String
+
+    """
+    A JSON object conforming the the shape specified in http://docs.sequelizejs.com/en/latest/docs/querying/
+    """
+    where: SequelizeJSON
+    offset: Int
+  ): [Experience]
+  openings(
+    limit: Int
+    order: String
+
+    """
+    A JSON object conforming the the shape specified in http://docs.sequelizejs.com/en/latest/docs/querying/
+    """
+    where: SequelizeJSON
+    offset: Int
+  ): [Opening]
+}
+
+type College {
+  id: Int!
+  title: String!
+  description: String
+  graduate: Int
+  educations(
+    limit: Int
+    order: String
+
+    """
+    A JSON object conforming the the shape specified in http://docs.sequelizejs.com/en/latest/docs/querying/
+    """
+    where: SequelizeJSON
+    offset: Int
+  ): [Education]
+}
+
+type Company {
+  id: Int!
+  title: String!
+  description: String
+  recruiters(
+    limit: Int
+    order: String
+
+    """
+    A JSON object conforming the the shape specified in http://docs.sequelizejs.com/en/latest/docs/querying/
+    """
+    where: SequelizeJSON
+    offset: Int
+  ): [Recruiter]
+  experiences(
+    limit: Int
+    order: String
+
+    """
+    A JSON object conforming the the shape specified in http://docs.sequelizejs.com/en/latest/docs/querying/
+    """
+    where: SequelizeJSON
+    offset: Int
+  ): [Experience]
+  openings(
+    limit: Int
+    order: String
+
+    """
+    A JSON object conforming the the shape specified in http://docs.sequelizejs.com/en/latest/docs/querying/
+    """
+    where: SequelizeJSON
+    offset: Int
+  ): [Opening]
+}
+
+type Degree {
+  id: Int!
+  title: String!
+  abbr: String!
+  description: String!
+  years: Int!
+  educations(
+    limit: Int
+    order: String
+
+    """
+    A JSON object conforming the the shape specified in http://docs.sequelizejs.com/en/latest/docs/querying/
+    """
+    where: SequelizeJSON
+    offset: Int
+  ): [Education]
+}
+
+type Education {
+  id: Int!
+  candidateId: Int!
+  collegeId: Int!
+  degreeId: Int!
+  start: Int
+  end: Int
+  description: String
+  candidate: Candidate
+  college: College
+  degree: Degree
+}
+
+type Employment {
+  id: Int!
+  title: String!
+  description: String
+  experiences(
+    limit: Int
+    order: String
+
+    """
+    A JSON object conforming the the shape specified in http://docs.sequelizejs.com/en/latest/docs/querying/
+    """
+    where: SequelizeJSON
+    offset: Int
+  ): [Experience]
+}
+
+type Ethnicity {
+  id: Int!
+  title: String!
+  candidates(
+    limit: Int
+    order: String
+
+    """
+    A JSON object conforming the the shape specified in http://docs.sequelizejs.com/en/latest/docs/querying/
+    """
+    where: SequelizeJSON
+    offset: Int
+  ): [Candidate]
+}
+
+type Experience {
+  id: Int!
+  candidateId: Int!
+  companyId: Int!
+  start: Int
+  end: Int
+  positionId: Int!
+  categoryId: Int!
+  employmentId: Int
+  location: String
+  description: String
+  candidate: Candidate
+  company: Company
+  position: Position
+  category: Category
+  employment: Employment
+}
+
+type Gender {
+  id: Int!
+  title: String!
+  candidates(
+    limit: Int
+    order: String
+
+    """
+    A JSON object conforming the the shape specified in http://docs.sequelizejs.com/en/latest/docs/querying/
+    """
+    where: SequelizeJSON
+    offset: Int
+  ): [Candidate]
+}
+
+type GenericResponse {
+  success: Boolean
+}
+
+type Industry {
+  id: Int!
+  title: String!
+}
+
+type Interview {
+  id: Int!
+  applicationId: Int!
+  start: Int
+  end: Int
+  status: Int
+  application: Application
+}
+
+type Major {
+  id: Int!
+  title: String!
+}
+
+type Mutation {
+  createCompany(title: String!, description: String): Company
+  updateCompany(id: Int, title: String, description: String): Company
+  deleteCompany(id: Int!): GenericResponse
+  createEmployment(title: String!, description: String): Employment
+  updateEmployment(id: Int, title: String, description: String): Employment
+  deleteEmployment(id: Int!): GenericResponse
+  createCategory(title: String!, description: String): Category
+  updateCategory(id: Int, title: String, description: String): Category
+  deleteCategory(id: Int!): GenericResponse
+  createPosition(title: String!, description: String): Position
+  updatePosition(id: Int, title: String, description: String): Position
+  deletePosition(id: Int!): GenericResponse
+  createRecruiter(companyId: Int, first: String, last: String, email: String!, phone: String, description: String, hash: String!, session: Int): Recruiter
+  updateRecruiter(id: Int, companyId: Int, first: String, last: String, email: String, phone: String, description: String, hash: String, session: Int): Recruiter
+  deleteRecruiter(id: Int!): GenericResponse
+  createExperience(candidateId: Int!, companyId: Int!, start: Int, end: Int, positionId: Int!, categoryId: Int!, employmentId: Int, location: String, description: String): Experience
+  updateExperience(id: Int, candidateId: Int, companyId: Int, start: Int, end: Int, positionId: Int, categoryId: Int, employmentId: Int, location: String, description: String): Experience
+  deleteExperience(id: Int!): GenericResponse
+  createEducation(candidateId: Int!, collegeId: Int!, degreeId: Int!, start: Int, end: Int, description: String): Education
+  updateEducation(id: Int, candidateId: Int, collegeId: Int, degreeId: Int, start: Int, end: Int, description: String): Education
+  deleteEducation(id: Int!): GenericResponse
+  createApplication(date: Int!, openingId: Int!, candidateId: Int!, status: Int!): Application
+  updateApplication(id: Int, date: Int, openingId: Int, candidateId: Int, status: Int): Application
+  deleteApplication(id: Int!): GenericResponse
+  createCandidate(first: String, last: String, email: String!, phone: String, description: String, hash: String!, session: Int, ethnicityId: Int, genderId: Int, pronounId: Int): Candidate
+  updateCandidate(id: Int, first: String, last: String, email: String, phone: String, description: String, hash: String, session: Int, ethnicityId: Int, genderId: Int, pronounId: Int): Candidate
+  deleteCandidate(id: Int!): GenericResponse
+  createInterview(applicationId: Int!, start: Int, end: Int, status: Int): Interview
+  updateInterview(id: Int, applicationId: Int, start: Int, end: Int, status: Int): Interview
+  deleteInterview(id: Int!): GenericResponse
+  createCollege(title: String!, description: String, graduate: Int): College
+  updateCollege(id: Int, title: String, description: String, graduate: Int): College
+  deleteCollege(id: Int!): GenericResponse
+  createDegree(title: String!, abbr: String!, description: String!, years: Int!): Degree
+  updateDegree(id: Int, title: String, abbr: String, description: String, years: Int): Degree
+  deleteDegree(id: Int!): GenericResponse
+  createIndustry(title: String!): Industry
+  updateIndustry(id: Int, title: String): Industry
+  deleteIndustry(id: Int!): GenericResponse
+  createOrganization(title: String!): Organization
+  updateOrganization(id: Int, title: String): Organization
+  deleteOrganization(id: Int!): GenericResponse
+  createMajor(title: String!): Major
+  updateMajor(id: Int, title: String): Major
+  deleteMajor(id: Int!): GenericResponse
+  createEthnicity(title: String!): Ethnicity
+  updateEthnicity(id: Int, title: String): Ethnicity
+  deleteEthnicity(id: Int!): GenericResponse
+  createPronoun(title: String!): Pronoun
+  updatePronoun(id: Int, title: String): Pronoun
+  deletePronoun(id: Int!): GenericResponse
+  createGender(title: String!): Gender
+  updateGender(id: Int, title: String): Gender
+  deleteGender(id: Int!): GenericResponse
+  createOpening(title: String!, description: String, published: Int!, deadline: Int, start: Int!, vacancy: Int, categoryId: Int!, positionId: Int!, companyId: Int!, recruiterId: Int!): Opening
+  updateOpening(id: Int, title: String, description: String, published: Int, deadline: Int, start: Int, vacancy: Int, categoryId: Int, positionId: Int, companyId: Int, recruiterId: Int): Opening
+  deleteOpening(id: Int!): GenericResponse
+}
+
+type Opening {
+  id: Int!
+  title: String!
+  description: String
+  published: Int!
+  deadline: Int
+  start: Int!
+  vacancy: Int
+  categoryId: Int!
+  positionId: Int!
+  companyId: Int!
+  recruiterId: Int!
+  applications(
+    limit: Int
+    order: String
+
+    """
+    A JSON object conforming the the shape specified in http://docs.sequelizejs.com/en/latest/docs/querying/
+    """
+    where: SequelizeJSON
+    offset: Int
+  ): [Application]
+  category: Category
+  position: Position
+  company: Company
+  recruiter: Recruiter
+}
+
+type Organization {
+  id: Int!
+  title: String!
+}
+
+type Position {
+  id: Int!
+  title: String!
+  description: String
+  experiences(
+    limit: Int
+    order: String
+
+    """
+    A JSON object conforming the the shape specified in http://docs.sequelizejs.com/en/latest/docs/querying/
+    """
+    where: SequelizeJSON
+    offset: Int
+  ): [Experience]
+  openings(
+    limit: Int
+    order: String
+
+    """
+    A JSON object conforming the the shape specified in http://docs.sequelizejs.com/en/latest/docs/querying/
+    """
+    where: SequelizeJSON
+    offset: Int
+  ): [Opening]
+}
+
+type Pronoun {
+  id: Int!
+  title: String!
+  candidates(
+    limit: Int
+    order: String
+
+    """
+    A JSON object conforming the the shape specified in http://docs.sequelizejs.com/en/latest/docs/querying/
+    """
+    where: SequelizeJSON
+    offset: Int
+  ): [Candidate]
+}
+
+type Query {
+  companies(
+    limit: Int
+    order: String
+
+    """
+    A JSON object conforming the the shape specified in http://docs.sequelizejs.com/en/latest/docs/querying/
+    """
+    where: SequelizeJSON
+    offset: Int
+  ): [Company]
+  company(
+    id: Int
+
+    """
+    A JSON object conforming the the shape specified in http://docs.sequelizejs.com/en/latest/docs/querying/
+    """
+    where: SequelizeJSON
+  ): Company
+  employments(
+    limit: Int
+    order: String
+
+    """
+    A JSON object conforming the the shape specified in http://docs.sequelizejs.com/en/latest/docs/querying/
+    """
+    where: SequelizeJSON
+    offset: Int
+  ): [Employment]
+  employment(
+    id: Int
+
+    """
+    A JSON object conforming the the shape specified in http://docs.sequelizejs.com/en/latest/docs/querying/
+    """
+    where: SequelizeJSON
+  ): Employment
+  categories(
+    limit: Int
+    order: String
+
+    """
+    A JSON object conforming the the shape specified in http://docs.sequelizejs.com/en/latest/docs/querying/
+    """
+    where: SequelizeJSON
+    offset: Int
+  ): [Category]
+  category(
+    id: Int
+
+    """
+    A JSON object conforming the the shape specified in http://docs.sequelizejs.com/en/latest/docs/querying/
+    """
+    where: SequelizeJSON
+  ): Category
+  positions(
+    limit: Int
+    order: String
+
+    """
+    A JSON object conforming the the shape specified in http://docs.sequelizejs.com/en/latest/docs/querying/
+    """
+    where: SequelizeJSON
+    offset: Int
+  ): [Position]
+  position(
+    id: Int
+
+    """
+    A JSON object conforming the the shape specified in http://docs.sequelizejs.com/en/latest/docs/querying/
+    """
+    where: SequelizeJSON
+  ): Position
+  recruiters(
+    limit: Int
+    order: String
+
+    """
+    A JSON object conforming the the shape specified in http://docs.sequelizejs.com/en/latest/docs/querying/
+    """
+    where: SequelizeJSON
+    offset: Int
+  ): [Recruiter]
+  recruiter(
+    id: Int
+
+    """
+    A JSON object conforming the the shape specified in http://docs.sequelizejs.com/en/latest/docs/querying/
+    """
+    where: SequelizeJSON
+  ): Recruiter
+  experiences(
+    limit: Int
+    order: String
+
+    """
+    A JSON object conforming the the shape specified in http://docs.sequelizejs.com/en/latest/docs/querying/
+    """
+    where: SequelizeJSON
+    offset: Int
+  ): [Experience]
+  experience(
+    id: Int
+
+    """
+    A JSON object conforming the the shape specified in http://docs.sequelizejs.com/en/latest/docs/querying/
+    """
+    where: SequelizeJSON
+  ): Experience
+  educations(
+    limit: Int
+    order: String
+
+    """
+    A JSON object conforming the the shape specified in http://docs.sequelizejs.com/en/latest/docs/querying/
+    """
+    where: SequelizeJSON
+    offset: Int
+  ): [Education]
+  education(
+    id: Int
+
+    """
+    A JSON object conforming the the shape specified in http://docs.sequelizejs.com/en/latest/docs/querying/
+    """
+    where: SequelizeJSON
+  ): Education
+  applications(
+    limit: Int
+    order: String
+
+    """
+    A JSON object conforming the the shape specified in http://docs.sequelizejs.com/en/latest/docs/querying/
+    """
+    where: SequelizeJSON
+    offset: Int
+  ): [Application]
+  application(
+    id: Int
+
+    """
+    A JSON object conforming the the shape specified in http://docs.sequelizejs.com/en/latest/docs/querying/
+    """
+    where: SequelizeJSON
+  ): Application
+  candidates(
+    limit: Int
+    order: String
+
+    """
+    A JSON object conforming the the shape specified in http://docs.sequelizejs.com/en/latest/docs/querying/
+    """
+    where: SequelizeJSON
+    offset: Int
+  ): [Candidate]
+  candidate(
+    id: Int
+
+    """
+    A JSON object conforming the the shape specified in http://docs.sequelizejs.com/en/latest/docs/querying/
+    """
+    where: SequelizeJSON
+  ): Candidate
+  interviews(
+    limit: Int
+    order: String
+
+    """
+    A JSON object conforming the the shape specified in http://docs.sequelizejs.com/en/latest/docs/querying/
+    """
+    where: SequelizeJSON
+    offset: Int
+  ): [Interview]
+  interview(
+    id: Int
+
+    """
+    A JSON object conforming the the shape specified in http://docs.sequelizejs.com/en/latest/docs/querying/
+    """
+    where: SequelizeJSON
+  ): Interview
+  colleges(
+    limit: Int
+    order: String
+
+    """
+    A JSON object conforming the the shape specified in http://docs.sequelizejs.com/en/latest/docs/querying/
+    """
+    where: SequelizeJSON
+    offset: Int
+  ): [College]
+  college(
+    id: Int
+
+    """
+    A JSON object conforming the the shape specified in http://docs.sequelizejs.com/en/latest/docs/querying/
+    """
+    where: SequelizeJSON
+  ): College
+  degrees(
+    limit: Int
+    order: String
+
+    """
+    A JSON object conforming the the shape specified in http://docs.sequelizejs.com/en/latest/docs/querying/
+    """
+    where: SequelizeJSON
+    offset: Int
+  ): [Degree]
+  degree(
+    id: Int
+
+    """
+    A JSON object conforming the the shape specified in http://docs.sequelizejs.com/en/latest/docs/querying/
+    """
+    where: SequelizeJSON
+  ): Degree
+  industries(
+    limit: Int
+    order: String
+
+    """
+    A JSON object conforming the the shape specified in http://docs.sequelizejs.com/en/latest/docs/querying/
+    """
+    where: SequelizeJSON
+    offset: Int
+  ): [Industry]
+  industry(
+    id: Int
+
+    """
+    A JSON object conforming the the shape specified in http://docs.sequelizejs.com/en/latest/docs/querying/
+    """
+    where: SequelizeJSON
+  ): Industry
+  organizations(
+    limit: Int
+    order: String
+
+    """
+    A JSON object conforming the the shape specified in http://docs.sequelizejs.com/en/latest/docs/querying/
+    """
+    where: SequelizeJSON
+    offset: Int
+  ): [Organization]
+  organization(
+    id: Int
+
+    """
+    A JSON object conforming the the shape specified in http://docs.sequelizejs.com/en/latest/docs/querying/
+    """
+    where: SequelizeJSON
+  ): Organization
+  majors(
+    limit: Int
+    order: String
+
+    """
+    A JSON object conforming the the shape specified in http://docs.sequelizejs.com/en/latest/docs/querying/
+    """
+    where: SequelizeJSON
+    offset: Int
+  ): [Major]
+  major(
+    id: Int
+
+    """
+    A JSON object conforming the the shape specified in http://docs.sequelizejs.com/en/latest/docs/querying/
+    """
+    where: SequelizeJSON
+  ): Major
+  ethnicities(
+    limit: Int
+    order: String
+
+    """
+    A JSON object conforming the the shape specified in http://docs.sequelizejs.com/en/latest/docs/querying/
+    """
+    where: SequelizeJSON
+    offset: Int
+  ): [Ethnicity]
+  ethnicity(
+    id: Int
+
+    """
+    A JSON object conforming the the shape specified in http://docs.sequelizejs.com/en/latest/docs/querying/
+    """
+    where: SequelizeJSON
+  ): Ethnicity
+  pronouns(
+    limit: Int
+    order: String
+
+    """
+    A JSON object conforming the the shape specified in http://docs.sequelizejs.com/en/latest/docs/querying/
+    """
+    where: SequelizeJSON
+    offset: Int
+  ): [Pronoun]
+  pronoun(
+    id: Int
+
+    """
+    A JSON object conforming the the shape specified in http://docs.sequelizejs.com/en/latest/docs/querying/
+    """
+    where: SequelizeJSON
+  ): Pronoun
+  genders(
+    limit: Int
+    order: String
+
+    """
+    A JSON object conforming the the shape specified in http://docs.sequelizejs.com/en/latest/docs/querying/
+    """
+    where: SequelizeJSON
+    offset: Int
+  ): [Gender]
+  gender(
+    id: Int
+
+    """
+    A JSON object conforming the the shape specified in http://docs.sequelizejs.com/en/latest/docs/querying/
+    """
+    where: SequelizeJSON
+  ): Gender
+  openings(
+    limit: Int
+    order: String
+
+    """
+    A JSON object conforming the the shape specified in http://docs.sequelizejs.com/en/latest/docs/querying/
+    """
+    where: SequelizeJSON
+    offset: Int
+  ): [Opening]
+  opening(
+    id: Int
+
+    """
+    A JSON object conforming the the shape specified in http://docs.sequelizejs.com/en/latest/docs/querying/
+    """
+    where: SequelizeJSON
+  ): Opening
+}
+
+type Recruiter {
+  id: Int!
+  companyId: Int
+  first: String
+  last: String
+  email: String!
+  phone: String
+  description: String
+  hash: String!
+  session: Int
+  openings(
+    limit: Int
+    order: String
+    where: SequelizeJSON
+    offset: Int
+  ): [Opening]
+  company: Company
+}

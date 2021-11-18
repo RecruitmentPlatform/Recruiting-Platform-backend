@@ -2,8 +2,7 @@ from flask import request, jsonify
 
 from models.utils import hash_password, verify_password, generate_session_id
 
-from models.classes.candidate import Candidate
-
+from models.classes.SQLTable import Candidate
 
 def signup_user():
     data = request.get_json()

@@ -16,13 +16,16 @@ from .interview.interview_routes import list_interviews, insert_interview, get_i
 from .experience.experience_routes import list_experiences, insert_experience, get_experience, update_experience, delete_experience
 from .education.education_routes import list_educations, insert_education, get_education, update_education, delete_education
 
+from models.classes.SQLTable import SQLTable
+from .database.SQLTable_routes import get
+
 app = Flask(__name__)
 CORS(app)
 
 # Pretty print JSON results
 app.config['JSONIFY_PRETTYPRINT_REGULAR'] = True
 
-# curl -X POST http://127.0.0.1:5000/api/signup -d '{"email":"test2@gmail.com","password":"21111"}'  -H "Content-Type: application/json"
+# curl -X POST http://127.0.0.1:5000/api/signup -d '{"email":"test5@gmail.com","password":"21111"}'  -H "Content-Type: application/json"
 @app.route("/api/signup", methods=["POST"])
 def api_signup():
     return signup_user()
@@ -36,6 +39,25 @@ def api_login():
 @app.route("/api/logout", methods=["POST"])
 def api_logout():
     return logout_user()
+
+# Get one row from a table
+# curl -X GET http://127.0.0.1:5000/api/candidate/id/1
+@app.route("/api/<table_name>/", methods=["GET"])
+def api_get_list(table_name):
+    argument_dict = request.args.to_dict()
+    return get(table_name,argument_dict)
+
+# Add a row to a table using id
+@app.route("/api/<table_name>/add", methods=["POST"])
+def api_insert():
+    return insert()
+
+# Delete a row from a table using id
+@app.route("/api/<table_name>/delete/<id>", methods=["POST"])
+def api_delete(table_name,id):
+    return delete(table_name,id)
+
+#######################
 
 ## Company Endpoints ##
 
@@ -77,12 +99,6 @@ def api_logout():
 #################################
 ## Candidate Endpoints ##
 
-# Get a list of all candidates
-# curl -X GET http://127.0.0.1:5000/api/candidates
-@app.route("/api/candidates/", methods=["GET"])
-def api_list_candidates():
-    return list_candidates()
-
 # Get a single candidate that matches the id
 #curl -X GET http://127.0.0.1:5000/api/candidates/1
 @app.route("/api/candidates/<criteria>/<criteria_id>", methods=["GET"])
@@ -90,13 +106,13 @@ def api_get_candidate(criteria_id,criteria="id"):
     return get_candidate(criteria_id, criteria)
 
 # Update a candidate record
-# curl -X PUT http://127.0.0.1:5000/api/candidates/update -d '{"first_name":"test", "last_name":"user", "email":"", "phone":"1234567", "description":"swe", "session_id"}' -H "Content-Type: application/json"
-@app.route("/api/candidates/update", methods=["PUT"])
+# curl -X POST http://127.0.0.1:5000/api/candidates/update -d '{"first_name":"test", "last_name":"user", "email":"updated@gmail.com", "phone":"1234567", "description":"swe", "session_id":"9c651306-644a-4363-8db6-d0f0a5674225"}' -H "Content-Type: application/json"
+@app.route("/api/candidates/update", methods=["POST"])
 def api_update_candidate():
     return update_candidate()
 
 # Delete a candidate record that matches the id
-#curl -X "DELETE" http://127.0.0.1:5000/api/candidates/delete/1
+# curl -X "DELETE" http://127.0.0.1:5000/api/candidates/delete/1
 @app.route("/api/candidates/delete/<candidate_id>", methods=["DELETE"])
 def api_delete_candidate(candidate_id):
     return delete_candidate(candidate_id)

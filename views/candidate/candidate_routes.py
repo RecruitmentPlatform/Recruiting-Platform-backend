@@ -1,8 +1,8 @@
 from flask import request, jsonify
 from models.classes.candidate import Candidate
 
-def list_candidates():
-    candidates = Candidate.get_all()
+def list_candidates(table_name):
+    candidates = Candidate.get_all(table_name)
     if candidates:
         return jsonify({"status":"success", "candidates":candidates})
     return jsonify({"status":"fail", "message":"No candidates in database."})  #added status to use in frontend
