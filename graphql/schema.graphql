@@ -1,0 +1,29 @@
+type Demo {
+  id: Int!
+  name: String
+  hint: String
+}
+
+type GenericResponse {
+  success: Boolean
+}
+
+type Mutation {
+  createDemo(name: String, hint: String): Demo
+  updateDemo(id: Int, name: String, hint: String): Demo
+  deleteDemo(id: Int!): GenericResponse
+}
+
+type Query {
+  demo(
+    id: Int
+
+    """
+    A JSON object conforming the the shape specified in http://docs.sequelizejs.com/en/latest/docs/querying/
+    """
+    where: SequelizeJSON
+  ): Demo
+}
+
+"""The `JSON` scalar type represents raw JSON as values."""
+scalar SequelizeJSON
