@@ -3,6 +3,8 @@ CREATE TABLE IF NOT EXISTS "companies" (
 	"id"	INTEGER NOT NULL UNIQUE,
 	"title"	TEXT NOT NULL UNIQUE,
 	"description"	TEXT,
+	"location" TEXT,
+	"website" TEXT,
 	PRIMARY KEY("id" AUTOINCREMENT)
 );
 CREATE TABLE IF NOT EXISTS "employments" (
@@ -11,38 +13,15 @@ CREATE TABLE IF NOT EXISTS "employments" (
 	"description"	TEXT,
 	PRIMARY KEY("id" AUTOINCREMENT)
 );
-CREATE TABLE IF NOT EXISTS "categories" (
-	"id"	INTEGER NOT NULL UNIQUE,
-	"title"	TEXT NOT NULL UNIQUE,
-	"description"	TEXT,
-	PRIMARY KEY("id" AUTOINCREMENT)
-);
-CREATE TABLE IF NOT EXISTS "positions" (
-	"id"	INTEGER NOT NULL UNIQUE,
-	"title"	TEXT NOT NULL UNIQUE,
-	"description"	TEXT,
-	PRIMARY KEY("id" AUTOINCREMENT)
-);
-CREATE TABLE IF NOT EXISTS "recruiters" (
-	"id"	INTEGER NOT NULL UNIQUE,
-	"company_id"	INTEGER,
-	"first"	TEXT,
-	"last"	TEXT,
-	"email"	TEXT NOT NULL UNIQUE,
-	"phone"	TEXT,
-	"description"	TEXT,
-	"hash"	TEXT NOT NULL,
-	"session"	INTEGER,
-	PRIMARY KEY("id" AUTOINCREMENT)
-);
 CREATE TABLE IF NOT EXISTS "experiences" (
 	"id"	INTEGER NOT NULL UNIQUE,
 	"candidate_id"	INTEGER NOT NULL,
-	"company_id"	INTEGER NOT NULL,
-	"start"	INTEGER,
-	"end"	INTEGER,
-	"position_id"	INTEGER NOT NULL,
-	"category_id"	INTEGER NOT NULL,
+	"title"	TEXT NOT NULL,
+	"company_id"	INTEGER,
+	"start_month"	INTEGER,
+	"start_year"	INTEGER,
+	"end_month"	INTEGER,
+	"end_year"	INTEGER,
 	"employment_id"	INTEGER,
 	"location"	TEXT,
 	"description"	TEXT,
@@ -53,8 +32,10 @@ CREATE TABLE IF NOT EXISTS "educations" (
 	"candidate_id"	INTEGER NOT NULL,
 	"college_id"	INTEGER NOT NULL,
 	"degree_id"	INTEGER NOT NULL,
-	"start"	INTEGER,
-	"end"	INTEGER,
+	"start_month"	INTEGER,
+	"start_year"	INTEGER,
+	"end_month"	INTEGER,
+	"end_year"	INTEGER,
 	"description"	TEXT,
 	PRIMARY KEY("id" AUTOINCREMENT)
 );
@@ -136,15 +117,51 @@ CREATE TABLE IF NOT EXISTS "genders" (
 CREATE TABLE IF NOT EXISTS "openings" (
 	"id"	INTEGER NOT NULL UNIQUE,
 	"title"	TEXT NOT NULL,
+	"date" INTEGER NOT NULL,
 	"description"	TEXT,
+	"location" TEXT,
 	"published"	INTEGER NOT NULL,
 	"deadline"	INTEGER,
-	"start"	INTEGER NOT NULL,
+	"salary_low" INTEGER,
+	"salary_high" INTEGER,
+	"start_month"	INTEGER,
+	"start_year"	INTEGER,
 	"vacancy"	INTEGER,
-	"category_id"	INTEGER NOT NULL,
-	"position_id"	INTEGER NOT NULL,
 	"company_id"	INTEGER NOT NULL,
-	"recruiter_id"	INTEGER NOT NULL,
+	"candidate_id"	INTEGER NOT NULL,
+	"employment_id" INTEGER NOT NULL,
+	PRIMARY KEY("id" AUTOINCREMENT)
+);
+CREATE TABLE IF NOT EXISTS "posts" (
+	"id" INTEGER NOT NULL,
+	"candidate_id" INTEGER NOT NULL,
+	"date" INTEGER NOT NULL,
+	"status" INTEGER NOT NULL,
+	"content" TEXT NOT NULL,
+	"opening_id" INTEGER NOT NULL,
+	PRIMARY KEY("id" AUTOINCREMENT)
+);
+CREATE TABLE IF NOT EXISTS "skills" (
+	"id"	INTEGER NOT NULL UNIQUE,
+	"title"	TEXT NOT NULL UNIQUE,
+	"skilltype_id" INTEGER NOT NULL,
+	PRIMARY KEY("id" AUTOINCREMENT)
+);
+CREATE TABLE IF NOT EXISTS "skilltypes" (
+	"id"	INTEGER NOT NULL UNIQUE,
+	"title"	TEXT NOT NULL UNIQUE,
+	PRIMARY KEY("id" AUTOINCREMENT)
+);
+CREATE TABLE IF NOT EXISTS "skill_candidate" (
+	"id" INTEGER NOT NULL UNIQUE,
+	"skill_id" INTEGER NOT NULL,
+	"candidate_id" INTEGER NOT NULL,
+	PRIMARY KEY("id" AUTOINCREMENT)
+);
+CREATE TABLE IF NOT EXISTS "candidate_company" (
+	"id" INTEGER NOT NULL UNIQUE,
+	"candidate_id" INTEGER NOT NULL,
+	"company_id" INTEGER NOT NULL,
 	PRIMARY KEY("id" AUTOINCREMENT)
 );
 COMMIT;

@@ -40,6 +40,13 @@ class SQLTable():
     @classmethod
     def get(cls, tableName = None, argument_dict = None, limit = 25, offset = 0, sort = 'DESC'):
         print(argument_dict)
+        #{id: 23523, name: weifjw}
+        # loop over all of them
+        # get the column names from the table im trying to insert to
+        # find _id column names to get foreign keys
+        # see if any of the data in the defined arguments tries to do a foreign key check
+        # WHERE THIS = THAT AND
+        # candidate {skill_id = 200, company_id = 50,  }
         if not tableName:
             tableName = cls.getTableName(cls)
         #valid_criteria = {"id","email","session_id"}
