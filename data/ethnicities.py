@@ -2,46 +2,46 @@
 {
   "results":[
     {
-        "name": "Asian"
+        "title": "Asian"
     },
     {
-        "name": "Asian - East Asia"
+        "title": "Asian - East Asia"
     },
     {
-        "name": "Asian - Middle East"
+        "title": "Asian - Middle East"
     },
     {
-        "name": "Asian - South Asia"
+        "title": "Asian - South Asia"
     },
     {
-        "name": "Asian - Southeast Asia"
+        "title": "Asian - Southeast Asia"
     },
     {
-        "name": "Black/African descent"
+        "title": "Black/African descent"
     },
     {
-        "name": "Latinx/Hispanic"
+        "title": "Latinx/Hispanic"
     },
     {
-        "name": "Middle Eastern/North African"
+        "title": "Middle Eastern/North African"
     },
     {
-        "name": "Native American"
+        "title": "Native American"
     },
     {
-        "name": "Native Hawaiian or Pacific Islander"
+        "title": "Native Hawaiian or Pacific Islander"
     },
     {
-        "name": "Not listed",
+        "title": "Not listed",
     },
     {
-        "name": "Pacific Islander"
+        "title": "Pacific Islander"
     },
     {
-        "name": "Prefer not to say"
+        "title": "Prefer not to say"
     },
     {
-        "name": "White"
+        "title": "White"
     }
   ]
 }

@@ -33,7 +33,6 @@ CREATE TABLE IF NOT EXISTS "educations" (
 	"candidate_id"	INTEGER NOT NULL,
 	"college_name" TEXT NOT NULL,
 	"college_id"	INTEGER,
-	"degree" TEXT,
 	"degree_id"	INTEGER,
 	"start_month"	INTEGER,
 	"start_year"	INTEGER,
@@ -85,7 +84,6 @@ CREATE TABLE IF NOT EXISTS "degrees" (
 	"id"	INTEGER NOT NULL UNIQUE,
 	"title"	TEXT NOT NULL UNIQUE,
 	"abbr"	TEXT NOT NULL,
-	"description"	TEXT NOT NULL,
 	"years"	INTEGER NOT NULL,
 	PRIMARY KEY("id" AUTOINCREMENT)
 );
@@ -164,10 +162,15 @@ CREATE TABLE IF NOT EXISTS "skill_candidate" (
 	"candidate_id" INTEGER NOT NULL,
 	PRIMARY KEY("id" AUTOINCREMENT)
 );
-CREATE TABLE IF NOT EXISTS "candidate_company" (
+CREATE TABLE IF NOT EXISTS "company_candidate" (
 	"id" INTEGER NOT NULL UNIQUE,
-	"candidate_id" INTEGER NOT NULL,
 	"company_id" INTEGER NOT NULL,
+	"candidate_id" INTEGER NOT NULL,
 	PRIMARY KEY("id" AUTOINCREMENT)
 );
-COMMIT;
+CREATE TABLE IF NOT EXISTS "organization_candidate" (
+	"id" INTEGER NOT NULL UNIQUE,
+	"organization_id" INTEGER NOT NULL,
+	"candidate_id" INTEGER NOT NULL,
+	PRIMARY KEY("id" AUTOINCREMENT)
+);COMMIT;
