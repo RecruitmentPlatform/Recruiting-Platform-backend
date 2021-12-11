@@ -144,7 +144,7 @@ CREATE TABLE IF NOT EXISTS "posts" (
 	"date" INTEGER NOT NULL,
 	"status" INTEGER NOT NULL,
 	"content" TEXT NOT NULL,
-	"opening_id" INTEGER NOT NULL,
+	"opening_id" INTEGER,
 	PRIMARY KEY("id" AUTOINCREMENT)
 );
 CREATE TABLE IF NOT EXISTS "skills" (
