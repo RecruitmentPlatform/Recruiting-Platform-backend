@@ -34,6 +34,7 @@ CREATE TABLE IF NOT EXISTS "educations" (
 	"college_name" TEXT NOT NULL,
 	"college_id"	INTEGER,
 	"degree_id"	INTEGER,
+	"major_name" TEXT,
 	"start_month"	INTEGER,
 	"start_year"	INTEGER,
 	"end_month"	INTEGER,
@@ -121,19 +122,19 @@ CREATE TABLE IF NOT EXISTS "openings" (
 	"id"	INTEGER NOT NULL UNIQUE,
 	"title"	TEXT NOT NULL,
 	"date" INTEGER NOT NULL,
-	"company_name" TEXT NOT NULL,
+	"status"	INTEGER NOT NULL,
+	"candidate_id"	INTEGER NOT NULL,
+	"employment_id" INTEGER NOT NULL,
+	"company_name" TEXT,
+	"company_id"	INTEGER,
 	"description"	TEXT,
 	"location" TEXT,
-	"published"	INTEGER NOT NULL,
 	"deadline"	INTEGER,
 	"salary_low" INTEGER,
 	"salary_high" INTEGER,
 	"start_month"	INTEGER,
 	"start_year"	INTEGER,
 	"vacancy"	INTEGER,
-	"company_id"	INTEGER,
-	"candidate_id"	INTEGER NOT NULL,
-	"employment_id" INTEGER NOT NULL,
 	PRIMARY KEY("id" AUTOINCREMENT)
 );
 CREATE TABLE IF NOT EXISTS "posts" (
@@ -173,4 +174,5 @@ CREATE TABLE IF NOT EXISTS "organization_candidate" (
 	"organization_id" INTEGER NOT NULL,
 	"candidate_id" INTEGER NOT NULL,
 	PRIMARY KEY("id" AUTOINCREMENT)
-);COMMIT;
+);
+COMMIT;

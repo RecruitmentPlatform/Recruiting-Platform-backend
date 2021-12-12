@@ -2,46 +2,34 @@
 {
   "results":[
     {
-        "title": "Asian"
+        title: "Asian"
     },
     {
-        "title": "Asian - East Asia"
+        title: "Black/African descent"
     },
     {
-        "title": "Asian - Middle East"
+        title: "Latinx/Hispanic"
     },
     {
-        "title": "Asian - South Asia"
+        title: "Middle Eastern/North African"
     },
     {
-        "title": "Asian - Southeast Asia"
+        title: "Native American"
     },
     {
-        "title": "Black/African descent"
+        title: "Native Hawaiian or Pacific Islander"
     },
     {
-        "title": "Latinx/Hispanic"
+        title: "Not listed"
     },
     {
-        "title": "Middle Eastern/North African"
+        title: "Pacific Islander"
     },
     {
-        "title": "Native American"
+        title: "Prefer not to say"
     },
     {
-        "title": "Native Hawaiian or Pacific Islander"
-    },
-    {
-        "title": "Not listed",
-    },
-    {
-        "title": "Pacific Islander"
-    },
-    {
-        "title": "Prefer not to say"
-    },
-    {
-        "title": "White"
+        title: "White"
     }
   ]
 }
