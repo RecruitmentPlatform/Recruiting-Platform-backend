@@ -7,10 +7,6 @@ type Application {
   interviews(
     limit: Int
     order: String
-
-    """
-    A JSON object conforming the the shape specified in http://docs.sequelizejs.com/en/latest/docs/querying/
-    """
     where: SequelizeJSON
     offset: Int
   ): [Interview]
@@ -33,30 +29,18 @@ type Candidate {
   experiences(
     limit: Int
     order: String
-
-    """
-    A JSON object conforming the the shape specified in http://docs.sequelizejs.com/en/latest/docs/querying/
-    """
     where: SequelizeJSON
     offset: Int
   ): [Experience]
   educations(
     limit: Int
     order: String
-
-    """
-    A JSON object conforming the the shape specified in http://docs.sequelizejs.com/en/latest/docs/querying/
-    """
     where: SequelizeJSON
     offset: Int
   ): [Education]
   applications(
     limit: Int
     order: String
-
-    """
-    A JSON object conforming the the shape specified in http://docs.sequelizejs.com/en/latest/docs/querying/
-    """
     where: SequelizeJSON
     offset: Int
   ): [Application]
@@ -72,20 +56,12 @@ type Category {
   experiences(
     limit: Int
     order: String
-
-    """
-    A JSON object conforming the the shape specified in http://docs.sequelizejs.com/en/latest/docs/querying/
-    """
     where: SequelizeJSON
     offset: Int
   ): [Experience]
   openings(
     limit: Int
     order: String
-
-    """
-    A JSON object conforming the the shape specified in http://docs.sequelizejs.com/en/latest/docs/querying/
-    """
     where: SequelizeJSON
     offset: Int
   ): [Opening]
@@ -99,10 +75,6 @@ type College {
   educations(
     limit: Int
     order: String
-
-    """
-    A JSON object conforming the the shape specified in http://docs.sequelizejs.com/en/latest/docs/querying/
-    """
     where: SequelizeJSON
     offset: Int
   ): [Education]
@@ -115,30 +87,18 @@ type Company {
   recruiters(
     limit: Int
     order: String
-
-    """
-    A JSON object conforming the the shape specified in http://docs.sequelizejs.com/en/latest/docs/querying/
-    """
     where: SequelizeJSON
     offset: Int
   ): [Recruiter]
   experiences(
     limit: Int
     order: String
-
-    """
-    A JSON object conforming the the shape specified in http://docs.sequelizejs.com/en/latest/docs/querying/
-    """
     where: SequelizeJSON
     offset: Int
   ): [Experience]
   openings(
     limit: Int
     order: String
-
-    """
-    A JSON object conforming the the shape specified in http://docs.sequelizejs.com/en/latest/docs/querying/
-    """
     where: SequelizeJSON
     offset: Int
   ): [Opening]
@@ -153,10 +113,6 @@ type Degree {
   educations(
     limit: Int
     order: String
-
-    """
-    A JSON object conforming the the shape specified in http://docs.sequelizejs.com/en/latest/docs/querying/
-    """
     where: SequelizeJSON
     offset: Int
   ): [Education]
@@ -182,10 +138,6 @@ type Employment {
   experiences(
     limit: Int
     order: String
-
-    """
-    A JSON object conforming the the shape specified in http://docs.sequelizejs.com/en/latest/docs/querying/
-    """
     where: SequelizeJSON
     offset: Int
   ): [Experience]
@@ -197,10 +149,6 @@ type Ethnicity {
   candidates(
     limit: Int
     order: String
-
-    """
-    A JSON object conforming the the shape specified in http://docs.sequelizejs.com/en/latest/docs/querying/
-    """
     where: SequelizeJSON
     offset: Int
   ): [Candidate]
@@ -230,10 +178,6 @@ type Gender {
   candidates(
     limit: Int
     order: String
-
-    """
-    A JSON object conforming the the shape specified in http://docs.sequelizejs.com/en/latest/docs/querying/
-    """
     where: SequelizeJSON
     offset: Int
   ): [Candidate]
@@ -337,10 +281,6 @@ type Opening {
   applications(
     limit: Int
     order: String
-
-    """
-    A JSON object conforming the the shape specified in http://docs.sequelizejs.com/en/latest/docs/querying/
-    """
     where: SequelizeJSON
     offset: Int
   ): [Application]
@@ -362,20 +302,12 @@ type Position {
   experiences(
     limit: Int
     order: String
-
-    """
-    A JSON object conforming the the shape specified in http://docs.sequelizejs.com/en/latest/docs/querying/
-    """
     where: SequelizeJSON
     offset: Int
   ): [Experience]
   openings(
     limit: Int
     order: String
-
-    """
-    A JSON object conforming the the shape specified in http://docs.sequelizejs.com/en/latest/docs/querying/
-    """
     where: SequelizeJSON
     offset: Int
   ): [Opening]
@@ -387,10 +319,6 @@ type Pronoun {
   candidates(
     limit: Int
     order: String
-
-    """
-    A JSON object conforming the the shape specified in http://docs.sequelizejs.com/en/latest/docs/querying/
-    """
     where: SequelizeJSON
     offset: Int
   ): [Candidate]
@@ -400,343 +328,191 @@ type Query {
   companies(
     limit: Int
     order: String
-
-    """
-    A JSON object conforming the the shape specified in http://docs.sequelizejs.com/en/latest/docs/querying/
-    """
     where: SequelizeJSON
     offset: Int
   ): [Company]
   company(
     id: Int
-
-    """
-    A JSON object conforming the the shape specified in http://docs.sequelizejs.com/en/latest/docs/querying/
-    """
     where: SequelizeJSON
   ): Company
   employments(
     limit: Int
     order: String
-
-    """
-    A JSON object conforming the the shape specified in http://docs.sequelizejs.com/en/latest/docs/querying/
-    """
     where: SequelizeJSON
     offset: Int
   ): [Employment]
   employment(
     id: Int
-
-    """
-    A JSON object conforming the the shape specified in http://docs.sequelizejs.com/en/latest/docs/querying/
-    """
     where: SequelizeJSON
   ): Employment
   categories(
     limit: Int
     order: String
-
-    """
-    A JSON object conforming the the shape specified in http://docs.sequelizejs.com/en/latest/docs/querying/
-    """
     where: SequelizeJSON
     offset: Int
   ): [Category]
   category(
     id: Int
-
-    """
-    A JSON object conforming the the shape specified in http://docs.sequelizejs.com/en/latest/docs/querying/
-    """
     where: SequelizeJSON
   ): Category
   positions(
     limit: Int
     order: String
-
-    """
-    A JSON object conforming the the shape specified in http://docs.sequelizejs.com/en/latest/docs/querying/
-    """
     where: SequelizeJSON
     offset: Int
   ): [Position]
   position(
     id: Int
-
-    """
-    A JSON object conforming the the shape specified in http://docs.sequelizejs.com/en/latest/docs/querying/
-    """
     where: SequelizeJSON
   ): Position
   recruiters(
     limit: Int
     order: String
-
-    """
-    A JSON object conforming the the shape specified in http://docs.sequelizejs.com/en/latest/docs/querying/
-    """
     where: SequelizeJSON
     offset: Int
   ): [Recruiter]
   recruiter(
     id: Int
-
-    """
-    A JSON object conforming the the shape specified in http://docs.sequelizejs.com/en/latest/docs/querying/
-    """
     where: SequelizeJSON
   ): Recruiter
   experiences(
     limit: Int
     order: String
-
-    """
-    A JSON object conforming the the shape specified in http://docs.sequelizejs.com/en/latest/docs/querying/
-    """
     where: SequelizeJSON
     offset: Int
   ): [Experience]
   experience(
     id: Int
-
-    """
-    A JSON object conforming the the shape specified in http://docs.sequelizejs.com/en/latest/docs/querying/
-    """
     where: SequelizeJSON
   ): Experience
   educations(
     limit: Int
     order: String
-
-    """
-    A JSON object conforming the the shape specified in http://docs.sequelizejs.com/en/latest/docs/querying/
-    """
     where: SequelizeJSON
     offset: Int
   ): [Education]
   education(
     id: Int
-
-    """
-    A JSON object conforming the the shape specified in http://docs.sequelizejs.com/en/latest/docs/querying/
-    """
     where: SequelizeJSON
   ): Education
   applications(
     limit: Int
     order: String
-
-    """
-    A JSON object conforming the the shape specified in http://docs.sequelizejs.com/en/latest/docs/querying/
-    """
     where: SequelizeJSON
     offset: Int
   ): [Application]
   application(
     id: Int
-
-    """
-    A JSON object conforming the the shape specified in http://docs.sequelizejs.com/en/latest/docs/querying/
-    """
     where: SequelizeJSON
   ): Application
   candidates(
     limit: Int
     order: String
-
-    """
-    A JSON object conforming the the shape specified in http://docs.sequelizejs.com/en/latest/docs/querying/
-    """
     where: SequelizeJSON
     offset: Int
   ): [Candidate]
   candidate(
     id: Int
-
-    """
-    A JSON object conforming the the shape specified in http://docs.sequelizejs.com/en/latest/docs/querying/
-    """
     where: SequelizeJSON
   ): Candidate
   interviews(
     limit: Int
     order: String
-
-    """
-    A JSON object conforming the the shape specified in http://docs.sequelizejs.com/en/latest/docs/querying/
-    """
     where: SequelizeJSON
     offset: Int
   ): [Interview]
   interview(
     id: Int
-
-    """
-    A JSON object conforming the the shape specified in http://docs.sequelizejs.com/en/latest/docs/querying/
-    """
     where: SequelizeJSON
   ): Interview
   colleges(
     limit: Int
     order: String
-
-    """
-    A JSON object conforming the the shape specified in http://docs.sequelizejs.com/en/latest/docs/querying/
-    """
     where: SequelizeJSON
     offset: Int
   ): [College]
   college(
     id: Int
-
-    """
-    A JSON object conforming the the shape specified in http://docs.sequelizejs.com/en/latest/docs/querying/
-    """
     where: SequelizeJSON
   ): College
   degrees(
     limit: Int
     order: String
-
-    """
-    A JSON object conforming the the shape specified in http://docs.sequelizejs.com/en/latest/docs/querying/
-    """
     where: SequelizeJSON
     offset: Int
   ): [Degree]
   degree(
     id: Int
-
-    """
-    A JSON object conforming the the shape specified in http://docs.sequelizejs.com/en/latest/docs/querying/
-    """
     where: SequelizeJSON
   ): Degree
   industries(
     limit: Int
     order: String
-
-    """
-    A JSON object conforming the the shape specified in http://docs.sequelizejs.com/en/latest/docs/querying/
-    """
     where: SequelizeJSON
     offset: Int
   ): [Industry]
   industry(
     id: Int
-
-    """
-    A JSON object conforming the the shape specified in http://docs.sequelizejs.com/en/latest/docs/querying/
-    """
     where: SequelizeJSON
   ): Industry
   organizations(
     limit: Int
     order: String
-
-    """
-    A JSON object conforming the the shape specified in http://docs.sequelizejs.com/en/latest/docs/querying/
-    """
     where: SequelizeJSON
     offset: Int
   ): [Organization]
   organization(
     id: Int
-
-    """
-    A JSON object conforming the the shape specified in http://docs.sequelizejs.com/en/latest/docs/querying/
-    """
     where: SequelizeJSON
   ): Organization
   majors(
     limit: Int
     order: String
-
-    """
-    A JSON object conforming the the shape specified in http://docs.sequelizejs.com/en/latest/docs/querying/
-    """
     where: SequelizeJSON
     offset: Int
   ): [Major]
   major(
     id: Int
-
-    """
-    A JSON object conforming the the shape specified in http://docs.sequelizejs.com/en/latest/docs/querying/
-    """
     where: SequelizeJSON
   ): Major
   ethnicities(
     limit: Int
     order: String
-
-    """
-    A JSON object conforming the the shape specified in http://docs.sequelizejs.com/en/latest/docs/querying/
-    """
     where: SequelizeJSON
     offset: Int
   ): [Ethnicity]
   ethnicity(
     id: Int
-
-    """
-    A JSON object conforming the the shape specified in http://docs.sequelizejs.com/en/latest/docs/querying/
-    """
     where: SequelizeJSON
   ): Ethnicity
   pronouns(
     limit: Int
     order: String
-
-    """
-    A JSON object conforming the the shape specified in http://docs.sequelizejs.com/en/latest/docs/querying/
-    """
     where: SequelizeJSON
     offset: Int
   ): [Pronoun]
   pronoun(
     id: Int
-
-    """
-    A JSON object conforming the the shape specified in http://docs.sequelizejs.com/en/latest/docs/querying/
-    """
     where: SequelizeJSON
   ): Pronoun
   genders(
     limit: Int
     order: String
-
-    """
-    A JSON object conforming the the shape specified in http://docs.sequelizejs.com/en/latest/docs/querying/
-    """
     where: SequelizeJSON
     offset: Int
   ): [Gender]
   gender(
     id: Int
-
-    """
-    A JSON object conforming the the shape specified in http://docs.sequelizejs.com/en/latest/docs/querying/
-    """
     where: SequelizeJSON
   ): Gender
   openings(
     limit: Int
     order: String
-
-    """
-    A JSON object conforming the the shape specified in http://docs.sequelizejs.com/en/latest/docs/querying/
-    """
     where: SequelizeJSON
     offset: Int
   ): [Opening]
   opening(
     id: Int
-
-    """
-    A JSON object conforming the the shape specified in http://docs.sequelizejs.com/en/latest/docs/querying/
-    """
     where: SequelizeJSON
   ): Opening
 }
